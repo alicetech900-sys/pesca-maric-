@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secretaria de Pesca - Protótipo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .app-container {
+            max-width: 400px;
+            height: 800px;
+            margin: 2rem auto;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            background-color: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            padding: 1rem;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding-bottom: 5rem; /* Espaço para o menu inferior */
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .sidebar {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            background-color: #fff;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease-in-out;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 40;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+        }
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            border-radius: 9999px; /* rounded-full */
+            color: #6b7280; /* text-gray-500 */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-button .icon {
+            font-size: 1.25rem; /* text-xl */
+            margin-bottom: 0.25rem;
+        }
+        .nav-button .label {
+            font-size: 0.75rem; /* text-xs */
+            line-height: 1rem;
+        }
+        .nav-button.active {
+            color: #1d4ed8; /* text-blue-700 */
+        }
+        .news-card {
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            transition: transform 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+        }
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            color: #4a5568;
+        }
+        .instagram-post {
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+        .instagram-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+<div class="app-container">
+    
+    <!-- Overlay para fechar o menu lateral -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Menu Lateral (Sidebar) -->
+    <div id="sidebar" class="sidebar p-4">
+        <!-- Cabeçalho do menu lateral com a logo -->
+        <div class="p-4 mb-8">
+            <img src="uploaded:Captura de tela 2025-08-03 021629.png-b68a16ea-c1f4-4704-b6f0-064b1b309a46" alt="Logo da Secretaria de Pesca de Maricá" class="w-full h-auto">
+        </div>
+
+        <!-- Botão para fechar o menu -->
+        <button id="close-sidebar-btn" class="absolute top-4 right-4 text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+            <i class="fa-solid fa-times"></i>
+        </button>
+
+        <!-- Itens de navegação do menu lateral -->
+        <nav class="flex flex-col gap-2 flex-grow">
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="home">
+                <i class="fa-solid fa-house w-6 text-center"></i>
+                <span>Início</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="tide-table">
+                <i class="fa-solid fa-water w-6 text-center"></i>
+                <span>Tábua de Maré</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-info">
+                <i class="fa-solid fa-fish w-6 text-center"></i>
+                <span>Informações da Pesca</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="events">
+                <i class="fa-solid fa-calendar-alt w-6 text-center"></i>
+                <span>Eventos e Competições</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="map">
+                <i class="fa-solid fa-map-marked-alt w-6 text-center"></i>
+                <span>Mapa</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="gallery">
+                <i class="fa-solid fa-camera w-6 text-center"></i>
+                <span>Galeria do Pescador</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Conteúdo Principal do Aplicativo -->
+    <main class="flex flex-col flex-1 relative">
+        <!-- Cabeçalho fixo no topo -->
+        <header class="p-4 flex items-center justify-between shadow-sm bg-white z-10 sticky top-0">
+            <button id="open-sidebar-btn" class="text-blue-600 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="flex items-center gap-2">
+                <img src="uploaded:Captura de tela 2025-08-03 021629.png-b68a16ea-c1f4-4704-b6f0-064b1b309a46" alt="Logo da Secretaria de Pesca de Maricá" class="h-10">
+            </div>
+            <div class="w-8"></div> <!-- Espaçamento para centralizar o título -->
+        </header>
+
+        <!-- Container principal de conteúdo com scroll -->
+        <div class="main-content">
+            
+            <!-- Tela: Início com publicações do Instagram -->
+            <section id="home" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Início</h2>
+                <h3 class="text-lg font-medium text-gray-600 mb-4">Últimas Publicações do Instagram</h3>
+                <div id="instagram-feed" class="flex flex-col gap-4">
+                    <div class='sk-instagram-feed' data-embed-id='25584712'></div>
+                </div>
+            </section>
+
+            <!-- Tela: Tábua de Maré -->
+            <section id="tide-table" class="screen active">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tábua de Maré</h2>
+                <!-- Conteúdo da tábua de maré será inserido aqui via JavaScript -->
+                <div id="tide-content" class="flex flex-col gap-4">
+                    <!-- Placeholder de carregamento -->
+                    <div class="loading-indicator">
+                        <i class="fa-solid fa-water fa-spin-pulse fa-2x"></i>
+                        <p>Carregando tábua de maré...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tela: Informações da Pesca -->
+            <section id="fishing-info" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Informações da Pesca</h2>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Peixes Mais Comuns</h3>
+                        <div class="flex items-center justify-around bg-gray-50 p-4 rounded-lg">
+                            <i class="fa-solid fa-fish text-blue-500 text-2xl"></i>
+                            <i class="fa-solid fa-shrimp text-blue-500 text-2xl"></i>
+                            <i class="fa-solid fa-squid text-blue-500 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Períodos de Defeso</h3>
+                        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                            <i class="fa-solid fa-calendar-days text-red-500 text-2xl"></i>
+                            <span class="font-medium">01 Dez - 28 Fev</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Dicas e Boas Práticas</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                                <i class="fa-solid fa-carrot text-orange-500"></i>
+                                <span class="font-medium">Iscas Recomendadas</span>
+                            </li>
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                                <i class="fa-solid fa-heart text-green-500"></i>
+                                <span class="font-medium">Práticas Sustentáveis</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tela: Eventos e Competições -->
+            <section id="events" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Eventos e Competições</h2>
+                <div class="flex flex-col gap-4">
+                    <!-- Cartão de Evento 1 -->
+                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
+                        <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg">Campeonato de Pesca</h3>
+                            <p class="text-sm text-gray-500 mt-1">07 mai 2024</p>
+                            <p class="text-sm text-gray-500">08:00 - Praia de Itaipuaçu</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </div>
+                    <!-- Cartão de Evento 2 -->
+                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
+                        <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg">Circuito de Pesca Esportiva</h3>
+                            <p class="text-sm text-gray-500 mt-1">21 jul 2024</p>
+                            <p class="text-sm text-gray-500">09:00 - Lagoa de Aratibá</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </div>
+                    <!-- Cartão de Evento 3 (exemplo adicional) -->
+                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
+                        <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg">Workshop de Pesca</h3>
+                            <p class="text-sm text-gray-500 mt-1">15 ago 2024</p>
+                            <p class="text-sm text-gray-500">14:00 - Sede da Secretaria</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tela: Mapa -->
+            <section id="map" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Mapa</h2>
+                <div class="bg-gray-200 h-96 rounded-xl shadow-md flex items-center justify-center relative overflow-hidden">
+                    <!-- Mapa simulado com um SVG simples -->
+                    <svg class="h-full w-full absolute top-0 left-0" viewBox="0 0 0 0" preserveAspectRatio="none">
+                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="#b3d7ff" stroke="#87c7ff" stroke-width="0.5"/>
+                        <circle cx="25" cy="50" r="2" fill="#d64949"/>
+                        <circle cx="65" cy="70" r="2" fill="#d64949"/>
+                        <circle cx="80" cy="20" r="2" fill="#d64949"/>
+                    </svg>
+                    <div class="z-10 bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-lg text-center">
+                        <h3 class="text-xl font-bold text-gray-800">Pontos de Interesse</h3>
+                        <p class="text-gray-600">Simulação de mapa de pesca.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tela: Galeria do Pescador -->
+            <section id="gallery" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Galeria do Pescador</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
+                        <img src="https://placehold.co/400x300/a0c4ff/000?text=Pescador+1" alt="Foto de um pescador" class="rounded-lg mb-2">
+                        <h3 class="font-semibold">Lucas</h3>
+                        <p class="text-sm text-gray-500">Holda a rirro</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
+                        <img src="https://placehold.co/400x300/c4a0ff/000?text=Pescadora+2" alt="Foto de uma pescadora" class="rounded-lg mb-2">
+                        <h3 class="font-semibold">Ana</h3>
+                        <p class="text-sm text-gray-500">Esportia, so moiro shor</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
+                        <img src="https://placehold.co/400x300/a0ffc4/000?text=Pescador+3" alt="Foto de um pescador" class="rounded-lg mb-2">
+                        <h3 class="font-semibold">João</h3>
+                        <p class="text-sm text-gray-500">Minha maior captura!</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
+                        <img src="https://placehold.co/400x300/ffc4a0/000?text=Pescadora+4" alt="Foto de uma pescadora" class="rounded-lg mb-2">
+                        <h3 class="font-semibold">Clara</h3>
+                        <p class="text-sm text-gray-500">Dia de sorte!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Menu de Navegação Inferior -->
+    <nav class="bottom-nav">
+        <a class="nav-button" href="#" data-target="home">
+            <i class="icon fa-solid fa-house"></i>
+            <span class="label">Início</span>
+        </a>
+        <a class="nav-button" href="#" data-target="tide-table">
+            <i class="icon fa-solid fa-water"></i>
+            <span class="label">Maré</span>
+        </a>
+        <a class="nav-button" href="#" data-target="fishing-info">
+            <i class="icon fa-solid fa-fish"></i>
+            <span class="label">Pesca</span>
+        </a>
+        <a class="nav-button" href="#" data-target="events">
+            <i class="icon fa-solid fa-calendar-alt"></i>
+            <span class="label">Eventos</span>
+        </a>
+        <a class="nav-button" href="#" data-target="map">
+            <i class="icon fa-solid fa-map-marked-alt"></i>
+            <span class="label">Mapa</span>
+        </a>
+        <a class="nav-button" href="#" data-target="gallery">
+            <i class="icon fa-solid fa-camera"></i>
+            <span class="label">Galeria</span>
+        </a>
+    </nav>
+</div>
+
+<script>
+    // Referências aos elementos HTML
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const openSidebarBtn = document.getElementById('open-sidebar-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+    const sidebarNavItems = document.querySelectorAll('.nav-item');
+    const bottomNavButtons = document.querySelectorAll('.bottom-nav .nav-button');
+    const screens = document.querySelectorAll('.screen');
+    const instagramFeed = document.getElementById('instagram-feed');
+    const tideContent = document.getElementById('tide-content');
+
+    // Chave de API do Storm Glass fornecida pelo usuário
+    const stormGlassApiKey = "e8d7feae-7075-11f0-bffb-0242ac130006-e8d7ff08-7075-11f0-bffb-0242ac130006";
+    
+    // Dados simulados da tábua de maré para os próximos dias
+    const tideData = {
+        city: "Maricá, RJ",
+        days: [
+            {
+                date: "Hoje",
+                tides: [
+                    { type: "Alta", time: "04:10", height: 1.2 },
+                    { type: "Baixa", time: "09:30", height: 0.4 },
+                    { type: "Alta", time: "16:20", height: 1.5 },
+                    { type: "Baixa", time: "22:05", height: 0.3 }
+                ],
+                chartData: [0.8, 1.2, 1.0, 0.6, 0.4, 0.7, 1.1, 1.5, 1.2, 0.8, 0.3, 0.5, 0.9]
+            },
+            {
+                date: "Amanhã",
+                tides: [
+                    { type: "Alta", time: "05:00", height: 1.3 },
+                    { type: "Baixa", time: "10:15", height: 0.5 },
+                    { type: "Alta", time: "17:00", height: 1.6 },
+                    { type: "Baixa", time: "23:00", height: 0.4 }
+                ],
+                chartData: [0.9, 1.3, 1.1, 0.7, 0.5, 0.8, 1.2, 1.6, 1.3, 0.9, 0.4, 0.6, 1.0]
+            },
+            {
+                date: "Terça",
+                tides: [
+                    { type: "Alta", time: "05:45", height: 1.4 },
+                    { type: "Baixa", time: "11:00", height: 0.6 },
+                    { type: "Alta", time: "17:45", height: 1.7 },
+                    { type: "Baixa", time: "23:50", height: 0.5 }
+                ],
+                chartData: [1.0, 1.4, 1.2, 0.8, 0.6, 0.9, 1.3, 1.7, 1.4, 1.0, 0.5, 0.7, 1.1]
+            },
+            {
+                date: "Quarta",
+                tides: [
+                    { type: "Alta", time: "06:30", height: 1.5 },
+                    { type: "Baixa", time: "11:45", height: 0.7 },
+                    { type: "Alta", time: "18:30", height: 1.8 }
+                ],
+                chartData: [1.1, 1.5, 1.3, 0.9, 0.7, 1.0, 1.4, 1.8, 1.5, 1.1, 0.6, 0.8, 1.2]
+            }
+        ]
+    };
+
+    let currentDayIndex = 0; // Começa com "Hoje"
+
+    // Inclusão do script do SociableKIT para o feed do Instagram
+    const script = document.createElement('script');
+    script.src = 'https://widgets.sociablekit.com/instagram-feed/widget.js';
+    script.defer = true;
+    document.head.appendChild(script);
+
+    // Função para renderizar o feed do Instagram
+    function renderInstagramFeed() {
+        // O widget do SociableKIT fará o carregamento dos dados de forma assíncrona.
+        // A função de renderização apenas garante que a tela seja exibida.
+    }
+    
+    // Função para renderizar o gráfico de marés
+    function renderTideChart(data) {
+        const ctx = document.getElementById('tideChart').getContext('2d');
+        const labels = ['0h', '2h', '4h', '6h', '8h', '10h', '12h', '14h', '16h', '18h', '20h', '22h', '24h'];
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Altura da Maré (m)',
+                    data: data,
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Altura (m)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Função para buscar e exibir a tábua de maré (simulada)
+    async function fetchTideData(dayIndex) {
+        // Exibe o indicador de carregamento
+        tideContent.innerHTML = `
+            <div class="loading-indicator">
+                <i class="fa-solid fa-water fa-spin-pulse fa-2x"></i>
+                <p>Carregando tábua de maré...</p>
+            </div>
+        `;
+        
+        // Simulação de chamada de API para obter dados de maré
+        // A chave de API do Storm Glass seria utilizada aqui para buscar dados reais.
+        const stormGlassApiKey = "e8d7feae-7075-11f0-bffb-0242ac130006-e8d7ff08-7075-11f0-bffb-0242ac130006";
+        
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        const currentDayData = tideData.days[dayIndex];
+        
+        // Limpa o conteúdo e exibe os dados simulados
+        tideContent.innerHTML = `
+            <div class="bg-white p-4 rounded-xl shadow-md">
+                <div class="flex items-center justify-between">
+                    <span class="text-lg font-bold">${currentDayData.date}</span>
+                    <span class="text-sm text-gray-500">${tideData.city}</span>
+                </div>
+                <!-- Gráfico de Maré -->
+                <div class="relative h-64 mt-4">
+                    <canvas id="tideChart"></canvas>
+                </div>
+                <!-- Detalhes da maré -->
+                <div class="flex justify-around mt-6">
+                    ${currentDayData.tides.map(tide => `
+                        <div class="flex flex-col items-center text-center">
+                            <span class="text-sm font-semibold text-gray-700">Maré ${tide.type}</span>
+                            <span class="text-xl font-bold text-blue-800">${tide.time}</span>
+                            <span class="text-sm text-gray-500">${tide.height}m</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            <!-- Botões de navegação -->
+            <div class="flex justify-between mt-4">
+                <button id="prev-day" class="p-2 rounded-full bg-gray-200 text-gray-700 disabled:opacity-50">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button id="today-btn" class="p-2 px-4 rounded-full bg-blue-600 text-white disabled:opacity-50">
+                    Hoje
+                </button>
+                <button id="next-day" class="p-2 rounded-full bg-gray-200 text-gray-700 disabled:opacity-50">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        `;
+        
+        // Adiciona event listeners aos novos botões de navegação
+        const prevButton = document.getElementById('prev-day');
+        const nextButton = document.getElementById('next-day');
+        const todayButton = document.getElementById('today-btn');
+
+        if (dayIndex === 0) prevButton.disabled = true;
+        if (dayIndex === tideData.days.length - 1) nextButton.disabled = true;
+
+        prevButton.addEventListener('click', () => {
+            currentDayIndex--;
+            fetchTideData(currentDayIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentDayIndex++;
+            fetchTideData(currentDayIndex);
+        });
+
+        todayButton.addEventListener('click', () => {
+            currentDayIndex = 0;
+            fetchTideData(currentDayIndex);
+        });
+
+        renderTideChart(currentDayData.chartData);
+    }
+
+    // Função para abrir o menu lateral
+    function openSidebar() {
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+    }
+
+    // Função para fechar o menu lateral
+    function closeSidebar() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    // Função para mudar a tela exibida e atualizar o estado ativo dos botões
+    function changeScreen(targetId) {
+        // Remove a classe 'active' de todas as telas
+        screens.forEach(screen => {
+            screen.classList.remove('active');
+        });
+        // Adiciona a classe 'active' à tela de destino
+        document.getElementById(targetId).classList.add('active');
+
+        // Se a tela de Início for ativada, chama a função para renderizar o feed
+        if (targetId === 'home') {
+            renderInstagramFeed();
+        }
+        
+        // Se a tela de Tábua de Maré for ativada, chama a função para buscar os dados de maré
+        if (targetId === 'tide-table') {
+            currentDayIndex = 0; // Reseta para hoje ao abrir a tela de maré
+            fetchTideData(currentDayIndex);
+        }
+
+        // Atualiza a classe 'active' nos botões de navegação
+        sidebarNavItems.forEach(item => {
+            if (item.dataset.target === targetId) {
+                item.classList.add('bg-red-100', 'text-red-600');
+            } else {
+                item.classList.remove('bg-red-100', 'text-red-600');
+            }
+        });
+        bottomNavButtons.forEach(item => {
+            if (item.dataset.target === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Adiciona os event listeners aos botões
+    openSidebarBtn.addEventListener('click', openSidebar);
+    closeSidebarBtn.addEventListener('click', closeSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Adiciona event listeners para os itens de navegação do menu lateral
+    sidebarNavItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = item.dataset.target;
+            changeScreen(targetId);
+            closeSidebar(); // Fecha o menu após a seleção
+        });
+    });
+
+    // Adiciona event listeners para os botões do menu inferior
+    bottomNavButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = button.dataset.target;
+            changeScreen(targetId);
+        });
+    });
+
+    // Inicia o aplicativo mostrando a tela inicial 'home'
+    window.onload = function() {
+      changeScreen('home');
+    };
+</script>
+
+</body>
+</html>
