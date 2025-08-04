@@ -109,16 +109,6 @@
         .nav-button.active {
             color: #1d4ed8; /* text-blue-700 */
         }
-        .news-card {
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            background-color: #fff;
-            transition: transform 0.2s;
-        }
-        .news-card:hover {
-            transform: translateY(-2px);
-        }
         .loading-indicator {
             display: flex;
             flex-direction: column;
@@ -140,6 +130,77 @@
             gap: 0.75rem;
             margin-bottom: 1rem;
         }
+        .news-card {
+            display: flex;
+            gap: 1rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f7fafc;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .chat-input-container {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            background-color: #fff;
+        }
+        .chat-input {
+            flex: 1;
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e0;
+        }
+        .chat-send-btn {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            font-weight: bold;
+        }
+        .message {
+            max-width: 80%;
+            padding: 0.75rem;
+            border-radius: 1rem;
+        }
+        .user-message {
+            align-self: flex-end;
+            background-color: #e2e8f0;
+            color: #1a202c;
+        }
+        .ia-message {
+            align-self: flex-start;
+            background-color: #3b82f6;
+            color: #fff;
+        }
+        .ia-loading-message {
+            align-self: flex-start;
+            color: #6b7280;
+            font-style: italic;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -152,8 +213,9 @@
     <!-- Menu Lateral (Sidebar) -->
     <div id="sidebar" class="sidebar p-4">
         <!-- Cabeçalho do menu lateral com a logo -->
-        <div class="p-4 mb-8">
-            <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="w-full h-auto">
+        <div class="p-4 mb-8 text-center flex flex-col items-center gap-4">
+            <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="w-24 h-24 object-cover rounded-full border-2 border-gray-200">
+            <h2 class="text-xl font-bold">Secretaria de Pesca de Maricá</h2>
         </div>
 
         <!-- Botão para fechar o menu -->
@@ -171,21 +233,21 @@
                 <i class="fa-solid fa-water w-6 text-center"></i>
                 <span>Tábua de Maré</span>
             </button>
-            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-info">
-                <i class="fa-solid fa-fish w-6 text-center"></i>
-                <span>Informações da Pesca</span>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-news">
+                <i class="fa-solid fa-newspaper w-6 text-center"></i>
+                <span>Notícias da Pesca</span>
             </button>
             <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="events">
                 <i class="fa-solid fa-calendar-alt w-6 text-center"></i>
                 <span>Eventos e Competições</span>
             </button>
-            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="map">
-                <i class="fa-solid fa-map-marked-alt w-6 text-center"></i>
-                <span>Mapa</span>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-info">
+                <i class="fa-solid fa-fish w-6 text-center"></i>
+                <span>Informações da Pesca</span>
             </button>
-            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="gallery">
-                <i class="fa-solid fa-camera w-6 text-center"></i>
-                <span>Galeria do Pescador</span>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="ia-chat">
+                <i class="fa-solid fa-robot w-6 text-center"></i>
+                <span>IA da Pesca</span>
             </button>
         </nav>
     </div>
@@ -197,8 +259,9 @@
             <button id="open-sidebar-btn" class="text-blue-600 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <div class="flex items-center gap-2">
-                <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="h-10">
+            <div class="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+                <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="h-10 w-10 object-cover rounded-full">
+                <span class="text-lg font-bold text-gray-800 hidden md:block">Secretaria de Pesca de Maricá</span>
             </div>
             <div class="w-8"></div> <!-- Espaçamento para centralizar o título -->
         </header>
@@ -214,9 +277,9 @@
                     <div class='sk-instagram-feed' data-embed-id='25584712'></div>
                 </div>
             </section>
-
+            
             <!-- Tela: Tábua de Maré -->
-            <section id="tide-table" class="screen active">
+            <section id="tide-table" class="screen">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tábua de Maré</h2>
                 <!-- Conteúdo da tábua de maré será inserido aqui via JavaScript -->
                 <div id="tide-content" class="flex flex-col gap-4">
@@ -228,37 +291,14 @@
                 </div>
             </section>
 
-            <!-- Tela: Informações da Pesca -->
-            <section id="fishing-info" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Informações da Pesca</h2>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col gap-6">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Peixes Mais Comuns</h3>
-                        <div class="flex items-center justify-around bg-gray-50 p-4 rounded-lg">
-                            <i class="fa-solid fa-fish text-blue-500 text-2xl"></i>
-                            <i class="fa-solid fa-shrimp text-blue-500 text-2xl"></i>
-                            <i class="fa-solid fa-squid text-blue-500 text-2xl"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Períodos de Defeso</h3>
-                        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                            <i class="fa-solid fa-calendar-days text-red-500 text-2xl"></i>
-                            <span class="font-medium">01 Dez - 28 Fev</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Dicas e Boas Práticas</h3>
-                        <ul class="flex flex-col gap-2">
-                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                                <i class="fa-solid fa-carrot text-orange-500"></i>
-                                <span class="font-medium">Iscas Recomendadas</span>
-                            </li>
-                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                                <i class="fa-solid fa-heart text-green-500"></i>
-                                <span class="font-medium">Práticas Sustentáveis</span>
-                            </li>
-                        </ul>
+            <!-- Tela: Notícias da Pesca -->
+            <section id="fishing-news" class="screen active">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Notícias da Pesca</h2>
+                <div id="news-list" class="flex flex-col gap-4">
+                    <!-- As notícias serão inseridas aqui via JavaScript -->
+                    <div class="loading-indicator">
+                        <i class="fa-solid fa-newspaper fa-spin-pulse fa-2x"></i>
+                        <p>Carregando notícias...</p>
                     </div>
                 </div>
             </section>
@@ -299,51 +339,60 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Tela: Mapa -->
-            <section id="map" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Mapa</h2>
-                <div class="bg-gray-200 h-96 rounded-xl shadow-md flex items-center justify-center relative overflow-hidden">
-                    <!-- Mapa simulado com um SVG simples -->
-                    <svg class="h-full w-full absolute top-0 left-0" viewBox="0 0 0 0" preserveAspectRatio="none">
-                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="#b3d7ff" stroke="#87c7ff" stroke-width="0.5"/>
-                        <circle cx="25" cy="50" r="2" fill="#d64949"/>
-                        <circle cx="65" cy="70" r="2" fill="#d64949"/>
-                        <circle cx="80" cy="20" r="2" fill="#d64949"/>
-                    </svg>
-                    <div class="z-10 bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-lg text-center">
-                        <h3 class="text-xl font-bold text-gray-800">Pontos de Interesse</h3>
-                        <p class="text-gray-600">Simulação de mapa de pesca.</p>
+            
+            <!-- Tela: Informações da Pesca -->
+            <section id="fishing-info" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Informações da Pesca</h2>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Peixes Mais Comuns</h3>
+                        <div class="flex items-center justify-around bg-gray-50 p-4 rounded-lg">
+                            <i class="fa-solid fa-fish text-blue-500 text-2xl"></i>
+                            <i class="fa-solid fa-shrimp text-blue-500 text-2xl"></i>
+                            <i class="fa-solid fa-squid text-blue-500 text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Períodos de Defeso</h3>
+                        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
+                            <i class="fa-solid fa-calendar-days text-red-500 text-2xl"></i>
+                            <span class="font-medium">01 Dez - 28 Fev</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Dicas e Boas Práticas</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                                <i class="fa-solid fa-carrot text-orange-500"></i>
+                                <span class="font-medium">Iscas Recomendadas</span>
+                            </li>
+                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                                <i class="fa-solid fa-heart text-green-500"></i>
+                                <span class="font-medium">Práticas Sustentáveis</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tela: IA da Pesca -->
+            <section id="ia-chat" class="screen">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">IA da Pesca</h2>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message ia-message">
+                            Olá! Eu sou a IA da Pesca. Pergunte-me qualquer coisa sobre pesca, regulamentação ou dicas.
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua pergunta...">
+                        <button id="chat-send-btn" class="chat-send-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <!-- Tela: Galeria do Pescador -->
-            <section id="gallery" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Galeria do Pescador</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
-                        <img src="https://placehold.co/400x300/a0c4ff/000?text=Pescador+1" alt="Foto de um pescador" class="rounded-lg mb-2">
-                        <h3 class="font-semibold">Lucas</h3>
-                        <p class="text-sm text-gray-500">Holda a rirro</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
-                        <img src="https://placehold.co/400x300/c4a0ff/000?text=Pescadora+2" alt="Foto de uma pescadora" class="rounded-lg mb-2">
-                        <h3 class="font-semibold">Ana</h3>
-                        <p class="text-sm text-gray-500">Esportia, so moiro shor</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
-                        <img src="https://placehold.co/400x300/a0ffc4/000?text=Pescador+3" alt="Foto de um pescador" class="rounded-lg mb-2">
-                        <h3 class="font-semibold">João</h3>
-                        <p class="text-sm text-gray-500">Minha maior captura!</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-2 text-center">
-                        <img src="https://placehold.co/400x300/ffc4a0/000?text=Pescadora+4" alt="Foto de uma pescadora" class="rounded-lg mb-2">
-                        <h3 class="font-semibold">Clara</h3>
-                        <p class="text-sm text-gray-500">Dia de sorte!</p>
-                    </div>
-                </div>
-            </section>
         </div>
     </main>
 
@@ -357,21 +406,21 @@
             <i class="icon fa-solid fa-water"></i>
             <span class="label">Maré</span>
         </a>
-        <a class="nav-button" href="#" data-target="fishing-info">
-            <i class="icon fa-solid fa-fish"></i>
-            <span class="label">Pesca</span>
+        <a class="nav-button active" href="#" data-target="fishing-news">
+            <i class="icon fa-solid fa-newspaper"></i>
+            <span class="label">Notícias</span>
         </a>
         <a class="nav-button" href="#" data-target="events">
             <i class="icon fa-solid fa-calendar-alt"></i>
             <span class="label">Eventos</span>
         </a>
-        <a class="nav-button" href="#" data-target="map">
-            <i class="icon fa-solid fa-map-marked-alt"></i>
-            <span class="label">Mapa</span>
+        <a class="nav-button" href="#" data-target="fishing-info">
+            <i class="icon fa-solid fa-fish"></i>
+            <span class="label">Pesca</span>
         </a>
-        <a class="nav-button" href="#" data-target="gallery">
-            <i class="icon fa-solid fa-camera"></i>
-            <span class="label">Galeria</span>
+        <a class="nav-button" href="#" data-target="ia-chat">
+            <i class="icon fa-solid fa-robot"></i>
+            <span class="label">IA</span>
         </a>
     </nav>
 </div>
@@ -387,9 +436,10 @@
     const screens = document.querySelectorAll('.screen');
     const instagramFeed = document.getElementById('instagram-feed');
     const tideContent = document.getElementById('tide-content');
-
-    // Chave de API do Storm Glass fornecida pelo usuário
-    const stormGlassApiKey = "e8d7feae-7075-11f0-bffb-0242ac130006-e8d7ff08-7075-11f0-bffb-0242ac130006";
+    const newsList = document.getElementById('news-list');
+    const iaChatInput = document.getElementById('chat-input');
+    const iaChatSendBtn = document.getElementById('chat-send-btn');
+    const iaChatMessages = document.getElementById('chat-messages');
     
     // Dados simulados da tábua de maré para os próximos dias
     const tideData = {
@@ -437,7 +487,32 @@
         ]
     };
 
+    const fishingNews = [
+        {
+            title: "Tainha: Saiba onde e como pescar na Costa do Sol",
+            snippet: "Com a temporada de tainha a todo vapor, pescadores dão dicas para a melhor pesca na região de Maricá.",
+            imageUrl: "https://placehold.co/80x80/a0c4ff/000?text=Noticia+1",
+            url: "#"
+        },
+        {
+            title: "Guia de pesca sustentável em Maricá",
+            snippet: "A Secretaria de Pesca lança um guia completo com boas práticas para a preservação da vida marinha.",
+            imageUrl: "https://placehold.co/80x80/c4a0ff/000?text=Noticia+2",
+            url: "#"
+        },
+        {
+            title: "Conheça os peixes mais comuns na região de Maricá",
+            snippet: "Um artigo detalhado sobre as espécies que habitam a costa maricaense e seus períodos de defeso.",
+            imageUrl: "https://placehold.co/80x80/a0ffc4/000?text=Noticia+3",
+            url: "#"
+        }
+    ];
+
     let currentDayIndex = 0; // Começa com "Hoje"
+    
+    // Chave de API do Hugging Face para o chatbot
+    const hfApiKey = "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";
+    const hfApiUrl = "https://api-inference.huggingface.co/models/google/gemma-2b"; // URL de um modelo de linguagem para simulação
 
     // Inclusão do script do SociableKIT para o feed do Instagram
     const script = document.createElement('script');
@@ -506,9 +581,6 @@
         `;
         
         // Simulação de chamada de API para obter dados de maré
-        // A chave de API do Storm Glass seria utilizada aqui para buscar dados reais.
-        const stormGlassApiKey = "e8d7feae-7075-11f0-bffb-0242ac130006-e8d7ff08-7075-11f0-bffb-0242ac130006";
-        
         await new Promise(resolve => setTimeout(resolve, 1500));
 
         const currentDayData = tideData.days[dayIndex];
@@ -574,6 +646,88 @@
 
         renderTideChart(currentDayData.chartData);
     }
+    
+    // Função para renderizar as notícias de pesca
+    async function renderFishingNews() {
+        // Exibe o indicador de carregamento
+        newsList.innerHTML = `
+            <div class="loading-indicator">
+                <i class="fa-solid fa-newspaper fa-spin-pulse fa-2x"></i>
+                <p>Carregando notícias...</p>
+            </div>
+        `;
+        
+        // Simulação de um atraso na busca dos dados
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Limpa o conteúdo e exibe as notícias simuladas
+        newsList.innerHTML = '';
+        fishingNews.forEach(item => {
+            const newsCard = `
+                <a href="${item.url}" target="_blank" class="news-card">
+                    <img src="${item.imageUrl}" alt="Imagem da notícia" class="w-20 h-20 object-cover rounded-lg flex-shrink-0">
+                    <div class="flex flex-col">
+                        <h4 class="font-semibold text-lg text-gray-800">${item.title}</h4>
+                        <p class="text-sm text-gray-600 mt-1">${item.snippet}</p>
+                    </div>
+                </a>
+            `;
+            newsList.innerHTML += newsCard;
+        });
+    }
+    
+    // Funções para o chatbot
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender === 'ia' ? 'ia-message' : 'user-message');
+        messageDiv.textContent = text;
+        iaChatMessages.appendChild(messageDiv);
+        iaChatMessages.scrollTop = iaChatMessages.scrollHeight; // Rola para a última mensagem
+    }
+
+    async function handleChatInput() {
+        const text = iaChatInput.value.trim();
+        if (text) {
+            addMessage(text, 'user');
+            iaChatInput.value = '';
+            
+            // Exibe um indicador de "digitando..." da IA
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('ia-loading-message');
+            typingIndicator.textContent = 'A IA está respondendo...';
+            iaChatMessages.appendChild(typingIndicator);
+            iaChatMessages.scrollTop = iaChatMessages.scrollHeight;
+
+            // Simulação da chamada de API para o Hugging Face
+            // Em um aplicativo real, a chamada seria assim:
+            // const response = await fetch(hfApiUrl, {
+            //     method: 'POST',
+            //     headers: {
+            //         "Authorization": `Bearer ${hfApiKey}`,
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify({ inputs: text })
+            // });
+            // const result = await response.json();
+            // const iaResponse = result[0].generated_text;
+
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simula o tempo de resposta da API
+
+            // Remove o indicador de "digitando..."
+            iaChatMessages.removeChild(typingIndicator);
+
+            // Simula a resposta da IA
+            const iaResponse = "Olá! Como uma IA da Pesca, posso te dar informações sobre regulamentação, dicas de equipamentos e espécies de peixes. Qual é a sua pergunta?";
+            addMessage(iaResponse, 'ia');
+        }
+    }
+
+    iaChatSendBtn.addEventListener('click', handleChatInput);
+    iaChatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleChatInput();
+        }
+    });
 
     // Função para abrir o menu lateral
     function openSidebar() {
@@ -599,6 +753,11 @@
         // Se a tela de Início for ativada, chama a função para renderizar o feed
         if (targetId === 'home') {
             renderInstagramFeed();
+        }
+
+        // Se a tela de Notícias for ativada, chama a função para renderizar as notícias
+        if (targetId === 'fishing-news') {
+            renderFishingNews();
         }
         
         // Se a tela de Tábua de Maré for ativada, chama a função para buscar os dados de maré
