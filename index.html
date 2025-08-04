@@ -229,6 +229,74 @@
             overflow-y: auto;
             position: relative;
         }
+        .aspect-ratio-4-5 {
+            position: relative;
+            width: 100%;
+            padding-top: 125%; /* 5 / 4 = 1.25 */
+        }
+        .aspect-ratio-4-5 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .sub-category-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .sub-category-card:hover {
+            transform: translateY(-2px);
+        }
+        .sub-category-icon-bg {
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            padding: 0.75rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-fish-img-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            max-width: 300px;
+            margin: 0 auto 1rem auto;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .modal-fish-img-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ia-feature-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-left: 4px solid #3b82f6;
+        }
+        .ia-feature-card:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -273,9 +341,9 @@
                 <i class="fa-solid fa-fish w-6 text-center"></i>
                 <span>Informações da Pesca</span>
             </button>
-            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="ia-chat">
-                <i class="fa-solid fa-robot w-6 text-center"></i>
-                <span>IA da Pesca</span>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="ia-features">
+                <i class="fa-solid fa-camera-retro w-6 text-center"></i>
+                <span>Identificador de Peixe</span>
             </button>
         </nav>
     </div>
@@ -287,9 +355,9 @@
             <button id="open-sidebar-btn" class="text-blue-600 text-xl p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <i class="fa-solid fa-bars"></i>
             </button>
-            <div class="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+            <div class="flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2">
                 <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="Logo da Secretaria de Pesca de Maricá" class="h-10 w-10 object-cover rounded-full">
-                <span class="text-lg font-bold text-gray-800 hidden md:block">Secretaria de Pesca de Maricá</span>
+                <span class="text-base font-bold text-gray-800 tracking-wider">Secretaria de Pesca de Maricá</span>
             </div>
             <div class="w-8"></div> <!-- Espaçamento para centralizar o título -->
         </header>
@@ -299,7 +367,7 @@
             
             <!-- Tela: Início com publicações do Instagram -->
             <section id="home" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Início</h2>
+                <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Início</h2>
                 <h3 class="text-lg font-medium text-gray-600 mb-4">Últimas Publicações do Instagram</h3>
                 <div id="instagram-feed" class="flex flex-col gap-4">
                     <div class="elfsight-app-319fa19a-dd36-4a5f-8cff-1dc6f3c6d518" data-elfsight-app-lazy></div>
@@ -308,7 +376,7 @@
             
             <!-- Tela: Tábua de Maré -->
             <section id="tide-table" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Tábua de Maré</h2>
+                <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Tábua de Maré</h2>
                 <!-- Conteúdo da tábua de maré será inserido aqui via JavaScript -->
                 <div id="tide-content" class="flex flex-col gap-4">
                     <!-- Placeholder de carregamento -->
@@ -319,21 +387,9 @@
                 </div>
             </section>
 
-            <!-- Tela: Notícias da Pesca -->
-            <section id="fishing-news" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Notícias da Pesca</h2>
-                <div id="news-list" class="flex flex-col gap-4">
-                    <!-- As notícias serão inseridas aqui via JavaScript -->
-                    <div class="loading-indicator">
-                        <i class="fa-solid fa-newspaper fa-spin-pulse fa-2x"></i>
-                        <p>Carregando notícias...</p>
-                    </div>
-                </div>
-            </section>
-
             <!-- Tela: Eventos e Competições -->
             <section id="events" class="screen active">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Eventos e Competições</h2>
+                <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Eventos e Competições</h2>
                 <div id="events-list" class="flex flex-col gap-4">
                     <!-- Eventos serão renderizados aqui -->
                     <!-- Placeholder de carregamento -->
@@ -344,59 +400,154 @@
                 </div>
             </section>
             
-            <!-- Tela: Informações da Pesca -->
-            <section id="fishing-info" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Informações da Pesca</h2>
-                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col gap-6">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Peixes Mais Comuns</h3>
-                        <div class="flex items-center justify-around bg-gray-50 p-4 rounded-lg">
-                            <i class="fa-solid fa-fish text-blue-500 text-2xl"></i>
-                            <i class="fa-solid fa-shrimp text-blue-500 text-2xl"></i>
-                            <i class="fa-solid fa-squid text-blue-500 text-2xl"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Períodos de Defeso</h3>
-                        <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
-                            <i class="fa-solid fa-calendar-days text-red-500 text-2xl"></i>
-                            <span class="font-medium">01 Dez - 28 Fev</span>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-2">Dicas e Boas Práticas</h3>
-                        <ul class="flex flex-col gap-2">
-                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                                <i class="fa-solid fa-carrot text-orange-500"></i>
-                                <span class="font-medium">Iscas Recomendadas</span>
-                            </li>
-                            <li class="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
-                                <i class="fa-solid fa-heart text-green-500"></i>
-                                <span class="font-medium">Práticas Sustentáveis</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Tela: IA da Pesca -->
-            <section id="ia-chat" class="screen">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">IA da Pesca</h2>
-                <div class="chat-container">
-                    <div id="chat-messages" class="chat-messages">
-                        <div class="message ia-message">
-                            Olá! Eu sou a IA da Pesca. Pergunte-me qualquer coisa sobre pesca, regulamentação ou dicas.
-                        </div>
-                    </div>
-                    <div class="chat-input-container">
-                        <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua pergunta...">
-                        <button id="chat-send-btn" class="chat-send-btn">
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
+            <!-- Tela: Notícias da Pesca -->
+            <section id="fishing-news" class="screen">
+                <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Notícias da Pesca</h2>
+                <div id="news-list" class="flex flex-col gap-4">
+                    <!-- As notícias serão inseridas aqui via JavaScript -->
+                    <div class="loading-indicator">
+                        <i class="fa-solid fa-newspaper fa-spin-pulse fa-2x"></i>
+                        <p>Carregando notícias...</p>
                     </div>
                 </div>
             </section>
 
+            <!-- Tela: Informações da Pesca -->
+            <section id="fishing-info" class="screen">
+                <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Informações da Pesca</h2>
+                <div id="sub-categories-list" class="flex flex-col gap-4">
+                    <!-- As sub-categorias serão renderizadas aqui via JavaScript -->
+                    <div class="loading-indicator">
+                        <i class="fa-solid fa-fish fa-spin-pulse fa-2x"></i>
+                        <p>Carregando informações...</p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Tela: Peixes Comuns (Sub-categoria) -->
+            <section id="common-fish" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button id="back-to-fishing-info-btn" class="text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Peixes Comuns</h2>
+                </div>
+                <div id="fish-list" class="flex flex-col gap-4">
+                    <!-- A lista de peixes será renderizada aqui via JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Outras Sub-categorias de Pesca (Telas) -->
+            <section id="fishing-closed-season" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Período de Defeso</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <p class="text-gray-700 mb-4">
+                        Período de Defeso é a época em que a pesca de uma ou mais espécies é proibida para garantir sua reprodução e a manutenção dos estoques pesqueiros.
+                    </p>
+                    <h3 class="font-bold text-lg mb-2">Defeso em Maricá:</h3>
+                    <p class="text-sm text-gray-600">
+                        O período de defeso na região de Maricá, para algumas espécies como a Tainha, geralmente ocorre de **Maio a Julho**. É importante sempre consultar a legislação mais recente para evitar multas.
+                    </p>
+                </div>
+            </section>
+
+            <section id="min-sizes" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Tamanhos Mínimos para Captura</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <p class="text-gray-700 mb-4">
+                        A captura de peixes com tamanho inferior ao mínimo permitido por lei é considerada pesca predatória. Abaixo estão as medidas de algumas espécies comuns na região.
+                    </p>
+                    <ul class="flex flex-col gap-2">
+                        <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                            <span>Tainha</span>
+                            <span>30 cm</span>
+                        </li>
+                        <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                            <span>Pampo</span>
+                            <span>25 cm</span>
+                        </li>
+                        <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                            <span>Robalo</span>
+                            <span>35 cm</span>
+                        </li>
+                        <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                            <span>Corvina</span>
+                            <span>20 cm</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="best-fishing-times" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Melhores Horários de Pesca</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="font-bold text-lg mb-2">Orientações Gerais:</h3>
+                    <p class="text-gray-700 mb-4">
+                        A pesca é influenciada por fatores como a maré, a lua e o horário do dia.
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                        <li>**Maré:** A mudança de maré (virada da maré) é um dos melhores momentos para pescar. A maré enchente também é favorável.</li>
+                        <li>**Lua:** Luas cheia e nova (marés vivas) geralmente são mais produtivas.</li>
+                        <li>**Horário:** O nascer e o pôr do sol são períodos de maior atividade para a maioria dos peixes.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="licensing" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Licenciamento e Documentos</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <p class="text-gray-700 mb-4">
+                        A licença de pesca amadora é obrigatória para a pesca de linha e anzol, tanto em água doce quanto salgada.
+                    </p>
+                    <h3 class="font-bold text-lg mb-2">Como tirar:</h3>
+                    <ul class="list-disc list-inside text-gray-700 text-sm mb-4">
+                        <li>Acesse o portal do Ministério da Pesca e Aquicultura.</li>
+                        <li>Preencha o formulário com seus dados pessoais.</li>
+                        <li>Pague a taxa de emissão da licença.</li>
+                    </ul>
+                    <a href="#" class="text-blue-600 font-semibold hover:underline">Link para o site oficial (simulado)</a>
+                </div>
+            </section>
+
+             <!-- Tela de Identificação de Peixe -->
+            <section id="ia-features" class="screen">
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button id="back-to-home-btn" class="text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">Identificador de Peixe</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center gap-4">
+                    <input type="file" id="fish-image-input" accept="image/*" class="w-full">
+                    <img id="fish-preview" src="https://placehold.co/300x200/e2e8f0/fff?text=Pré-visualização" class="w-full h-auto rounded-lg mb-4">
+                    <button id="identify-fish-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 transition-colors">
+                        Identificar Peixe
+                    </button>
+                    <div id="fish-result" class="text-gray-700 p-3 bg-gray-100 rounded-lg w-full">
+                        Resultados da identificação aparecerão aqui...
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -406,7 +557,9 @@
             <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-700 text-2xl p-2 rounded-full hover:bg-gray-200 transition-colors">
                 <i class="fa-solid fa-times"></i>
             </button>
-            <img id="modal-event-img" src="" alt="Imagem do Evento" class="w-full h-48 object-cover rounded-lg mb-4">
+            <div class="aspect-ratio-4-5 rounded-lg mb-4">
+                <img id="modal-event-img" src="" alt="Imagem do Evento" class="object-cover rounded-lg">
+            </div>
             <h3 id="modal-event-title" class="font-bold text-2xl mb-2"></h3>
             <p id="modal-event-date" class="text-sm text-gray-500"></p>
             <p id="modal-event-time" class="text-sm text-gray-500"></p>
@@ -414,6 +567,30 @@
             <p id="modal-event-description" class="text-gray-700 text-base"></p>
         </div>
     </div>
+
+    <!-- Modal para detalhes do peixe -->
+    <div id="fish-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-fish-modal-btn" class="absolute top-4 right-4 text-gray-700 text-2xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div class="flex flex-col items-center">
+                <div class="relative w-full mb-4 rounded-lg overflow-hidden" style="padding-top: 56.25%;"> <!-- 16:9 Aspect Ratio -->
+                  <img id="modal-fish-img" src="" alt="Imagem do Peixe" class="absolute top-0 left-0 w-full h-full object-cover">
+                </div>
+                <h3 id="modal-fish-name" class="font-bold text-2xl mb-2"></h3>
+                <p id="modal-fish-bio" class="text-gray-700 text-base text-center"></p>
+            </div>
+            <h4 class="font-bold text-lg mt-4">Dicas de Pesca</h4>
+            <ul class="list-disc list-inside text-gray-700 text-sm">
+                <li id="modal-fish-locais"></li>
+                <li id="modal-fish-epoca"></li>
+                <li id="modal-fish-mares"></li>
+                <li id="modal-fish-iscas"></li>
+            </ul>
+        </div>
+    </div>
+
 
     <!-- Menu de Navegação Inferior -->
     <nav class="bottom-nav">
@@ -437,8 +614,8 @@
             <i class="icon fa-solid fa-fish"></i>
             <span class="label">Pesca</span>
         </a>
-        <a class="nav-button" href="#" data-target="ia-chat">
-            <i class="icon fa-solid fa-robot"></i>
+        <a class="nav-button" href="#" data-target="ia-features">
+            <i class="icon fa-solid fa-camera-retro"></i>
             <span class="label">IA</span>
         </a>
     </nav>
@@ -458,9 +635,18 @@
     const tideContent = document.getElementById('tide-content');
     const newsList = document.getElementById('news-list');
     const eventsList = document.getElementById('events-list');
-    const iaChatInput = document.getElementById('chat-input');
-    const iaChatSendBtn = document.getElementById('chat-send-btn');
-    const iaChatMessages = document.getElementById('chat-messages');
+    const subCategoriesList = document.getElementById('sub-categories-list');
+    const fishList = document.getElementById('fish-list');
+    const backToFishingInfoBtns = document.querySelectorAll('.back-to-fishing-info-btn');
+
+    // Gemini IA buttons and elements
+    const iaFeaturesScreen = document.getElementById('ia-features');
+    const backToHomeBtn = document.getElementById('back-to-home-btn');
+    const fishImageInput = document.getElementById('fish-image-input');
+    const fishPreview = document.getElementById('fish-preview');
+    const identifyFishBtn = document.getElementById('identify-fish-btn');
+    const fishResult = document.getElementById('fish-result');
+
 
     // Modal elements
     const eventModal = document.getElementById('event-modal');
@@ -471,6 +657,16 @@
     const modalEventTime = document.getElementById('modal-event-time');
     const modalEventLocation = document.getElementById('modal-event-location');
     const modalEventDescription = document.getElementById('modal-event-description');
+
+    const fishModal = document.getElementById('fish-modal');
+    const closeFishModalBtn = document.getElementById('close-fish-modal-btn');
+    const modalFishImg = document.getElementById('modal-fish-img');
+    const modalFishName = document.getElementById('modal-fish-name');
+    const modalFishBio = document.getElementById('modal-fish-bio');
+    const modalFishLocais = document.getElementById('modal-fish-locais');
+    const modalFishEpoca = document.getElementById('modal-fish-epoca');
+    const modalFishMares = document.getElementById('modal-fish-mares');
+    const modalFishIscas = document.getElementById('modal-fish-iscas');
     
     // Dados simulados da tábua de maré para os próximos dias
     const tideData = {
@@ -550,12 +746,115 @@
         }
     ];
 
+    const fishData = [
+        {
+            name: "Tainha",
+            imageUrl: "https://i.pinimg.com/736x/d2/be/cb/d2becbf83dbd6b4395aac98dfa5c14b2.jpg",
+            bio: "Peixe marinho e estuarino da família Mugilidae, muito comum no sudeste e sul do Brasil. Vive em águas costeiras e salobras, alimentando-se de matéria orgânica e microalgas. Importante economicamente e muito valorizada na culinária (assada, recheada, com ova). Pode atingir até 70 cm e pesar 3 kg.",
+            locais: "Praia da Barra de Maricá, Ponte Preta, Ponta do Boqueirão, Canal da Barra e entorno da Lagoa de Maricá, Restingas (em redes, espinhéis ou tarrafas).",
+            epoca: "Maio a agosto, com pico em junho e julho (época da desova e migração).",
+            mares: "Maré enchendo (subindo) e pico da maré cheia, Por quê? A tainha se aproxima da costa e estuários com a maré enchendo, pois entra para se alimentar. E o melhor horário é Início da manhã ou fim da tarde, com água movimentada.",
+            iscas: "Camarão fresco, Lula, Miúdos de peixe (carne da própria tainha), Tatuí, Iscas vegetais também funcionam em anzol (massa de pão e farinha com sal)."
+        },
+        {
+            name: "Pampo",
+            imageUrl: "blob:https://br.pinterest.com/88dd320b-4f25-4d14-a71e-b15b51ff562a",
+            bio: "Peixe da família Carangidae, de corpo alto e prateado com tons amarelados. Vive em praias de arrebentação, águas rasas e fundos arenosos. Muito apreciado na pesca esportiva por sua força e também na culinária. Pode chegar a 50 cm e 5–6 kg.",
+            locais: "Praia da Barra de Maricá, Praia de Cordeirinho, Praia de Ponta Negra, Arrebentações e “canais” formados na maré.",
+            epoca: "Mais ativo na primavera e verão (outubro a março), quando as águas estão mais quentes.",
+            mares: "Maré enchendo e cheia, Por quê? O pampo se alimenta em regiões de arrebentação e canais de areia, onde a água cobre o solo e movimenta a comida. E o melhor horário é duas horas antes até uma hora depois do pico da maré cheia.",
+            iscas: "Camarão (vivo ou morto), Corrupto, Tatuí, Minhoca de praia. Também aceita isca artificial pequena em águas claras."
+        },
+        {
+            name: "Robalo",
+            imageUrl: "https://paginasdabio.ufpr.br/wp-content/uploads/2023/08/image-30.jpg",
+            bio: "Espécie predadora e costeira, comum em estuários, manguezais e desembocaduras de rios. Robalo-peva (C. parallelus) é menor, e o robalo-flecha (C. undecimalis) é maior (até 1 m e 10 kg). Muito valorizado pela pesca esportiva por ser brigador e pela carne nobre.",
+            locais: "Desembocadura do Canal da Barra, Manguezais e margens da Lagoa de Maricá, Canais salobros e fundos com estrutura (troncos, pedras, buracos)",
+            epoca: "Mais ativo de setembro a abril. Entre maio e julho, em alguns estados ocorre defeso — é bom confirmar se há proibição local.",
+            mares: "Marés de lua (cheia e nova) são as melhores.",
+            iscas: "Começo da enchente ou começo da vazante, Por quê? Robalos gostam de caçar na corrente, perto de estruturas (troncos, pedras, mangue). Maré em movimento ativa o apetite deles. E o melhor horário é fim da tarde, madrugada ou amanhecer — principalmente quando a água está começando a correr."
+        },
+        {
+            name: "Tilápia",
+            imageUrl: "https://i.pinimg.com/736x/41/2a/23/412a2359dbb7f27ddb3d7fa62db189d1.jpg",
+            bio: "A tilápia-do-nilo (Oreochromis niloticus) é a espécie mais comum no Brasil, originária da África e amplamente introduzida em represas, rios e criadouros. É um peixe de água doce e quente, de crescimento rápido, fácil adaptação, e muito utilizado na piscicultura comercial. Pode atingir até 50 cm e pesar mais de 4 kg, mas a maioria das capturas fica entre 300g e 1,5 kg. Alimenta-se de algas, detritos, insetos, ração e vegetação aquática. Tem carne branca, leve e saborosa.",
+            locais: "Lagoas de água doce com pouco fluxo (se tiver alguma parte doce na Lagoa de Maricá), Represas, açudes e criadouros artificiais, Tanques de pesque-pague e fazendas de criação nos arredores da cidade (como Itaboraí, São Gonçalo, Rio Bonito). Dica: Em Maricá, pesque-pagues particulares costumam ter tilápia disponível para pesca recreativa.",
+            epoca: "Primavera e verão (setembro a março). Evite os meses mais frios, pois ela se torna lenta e se alimenta menos.",
+            mares: "Não se aplica diretamente, Por quê? Tilápias vivem em água doce parada ou com pouca correnteza, então maré não influencia diretamente. E o melhor horário é início da manhã ou fim da tarde.",
+            iscas: "Massinha de pão com queijo ou leite, Ração de peixe molhada em forma de bolinha, Milho verde cozido, Minhoca, Insetos (larvas, grilo), Pedaços de banana ou frutas doces, Equipamento leve, anzóis pequenos (1 a 6), linha fina (0,20 a 0,28 mm) e uso de boia ou fundo."
+        },
+        {
+            name: "Corvina",
+            imageUrl: "https://i.pinimg.com/736x/75/2f/26/752f26c74c859e4a5be0ac096b63361b.jpg",
+            bio: "Peixe costeiro da família Sciaenidae, muito comum no sudeste brasileiro. Vive em estuários, baías e fundos arenosos, geralmente em locais com correnteza leve. Muito valorizado pela pesca e culinária, carne branca e saborosa. Pode medir até 80 cm e pesar mais de 4 kg.",
+            locais: "Canal da Barra, Lagoa de Maricá (áreas mais fundas e salobras), Desembocaduras de rios, Próximo a fundos de lama/areia com estrutura.",
+            epoca: "Primavera e verão, mas pode ser capturada o ano todo. Costuma ser mais ativa no início da noite e madrugada, com maré enchendo.",
+            mares: "Maré enchendo ou início da vazante, Por quê? Com a água movimentada, ela sai do fundo para caçar. Se alimenta bem com a maré subindo ou descendo, mas não com água parada. E o melhor horário é final da tarde e à noite (especialmente com maré mexendo).",
+            iscas: "Camarão, Sardinha em pedaços, Tainhota (filé de peixes pequenos), Iscas artificiais (jig, shad em fundo)"
+        }
+    ];
+
+    const subCategoriesData = [
+        { title: "Peixes Comuns", icon: "fa-fish", target: "common-fish" },
+        { title: "Período de Defeso", icon: "fa-ban", target: "fishing-closed-season" },
+        { title: "Tamanhos Mínimos para Captura", icon: "fa-ruler-horizontal", target: "min-sizes" },
+        { title: "Melhores Horários de Pesca", icon: "fa-clock", target: "best-fishing-times" },
+        { title: "Licenciamento e Documentos", icon: "fa-file-alt", target: "licensing" }
+    ];
+    
+    // Dados para as outras sub-categorias (simulados)
+    const closedSeasonData = {
+        title: "Período de Defeso",
+        content: `O período de Defeso é a época em que a pesca de uma ou mais espécies é proibida para garantir sua reprodução e a manutenção dos estoques pesqueiros.
+        
+        **Defeso em Maricá:** O período de defeso na região de Maricá, para algumas espécies como a Tainha, geralmente ocorre de **Maio a Julho**. É importante sempre consultar a legislação mais recente para evitar multas.`,
+        icon: "fa-ban",
+        target: "fishing-closed-season"
+    };
+
+    const minSizesData = {
+        title: "Tamanhos Mínimos para Captura",
+        content: `A captura de peixes com tamanho inferior ao mínimo permitido por lei é considerada pesca predatória. Abaixo estão as medidas de algumas espécies comuns na região.`,
+        icon: "fa-ruler-horizontal",
+        target: "min-sizes"
+    };
+
+    const bestTimesData = {
+        title: "Melhores Horários de Pesca",
+        content: `A pesca é influenciada por fatores como a maré, a lua e o horário do dia.
+        
+        **Orientações Gerais:**
+        - **Maré:** A mudança de maré (virada da maré) é um dos melhores momentos para pescar. A maré enchente também é favorável.
+        - **Lua:** Luas cheia e nova (marés vivas) geralmente são mais produtivas.
+        - **Horário:** O nascer e o pôr do sol são períodos de maior atividade para a maioria dos peixes.`,
+        icon: "fa-clock",
+        target: "best-fishing-times"
+    };
+
+    const licensingData = {
+        title: "Licenciamento e Documentos",
+        content: `A licença de pesca amadora é obrigatória para a pesca de linha e anzol, tanto em água doce quanto salgada.
+        
+        **Como tirar:**
+        1. Acesse o portal do Ministério da Pesca e Aquicultura.
+        2. Preencha o formulário com seus dados pessoais.
+        3. Pague a taxa de emissão da licença.
+        
+        [Link para o site oficial (simulado)](#)`,
+        icon: "fa-file-alt",
+        target: "licensing"
+    };
+    
+    const allSubCategoriesData = [
+        ...subCategoriesData,
+        closedSeasonData,
+        minSizesData,
+        bestTimesData,
+        licensingData
+    ];
+
     let currentDayIndex = 0; // Começa com "Hoje"
     
-    // Chave de API do Hugging Face para o chatbot
-    const hfApiKey = "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";
-    const hfApiUrl = "https://kenxitou-pesca-marica-chat.hf.space/run/predict";
-
     // Inclusão do script do Elfsight para o feed do Instagram
     const elfsightScript = document.createElement('script');
     elfsightScript.src = 'https://static.elfsight.com/platform/platform.js';
@@ -721,14 +1020,15 @@
         eventsList.innerHTML = '';
         eventsData.forEach((event, index) => {
             const eventCard = `
-                <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4 cursor-pointer event-card" data-index="${index}">
-                    <img src="${event.imageUrl}" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-lg">${event.title}</h3>
-                        <p class="text-sm text-gray-500 mt-1">${event.date}</p>
-                        <p class="text-sm text-gray-500">${event.time} - ${event.location}</p>
+                <div class="bg-white p-4 rounded-xl shadow-md flex flex-col gap-4 cursor-pointer event-card" data-index="${index}">
+                    <div class="aspect-ratio-4-5 rounded-lg overflow-hidden">
+                        <img src="${event.imageUrl}" alt="Imagem do Evento" class="w-full h-full object-cover">
                     </div>
-                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                    <div class="flex flex-col">
+                        <h3 class="font-semibold text-lg">${event.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">${event.date} - ${event.time}</p>
+                        <p class="text-sm text-gray-500">${event.location}</p>
+                    </div>
                 </div>
             `;
             eventsList.innerHTML += eventCard;
@@ -764,52 +1064,176 @@
             hideEventModal();
         }
     });
+    
+    // Função para renderizar as sub-categorias de pesca
+    function renderSubCategories() {
+        subCategoriesList.innerHTML = '';
+        subCategoriesData.forEach(cat => {
+            const card = `
+                <div class="sub-category-card" data-target="${cat.target}">
+                    <div class="sub-category-icon-bg">
+                        <i class="fa-solid ${cat.icon} text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg">${cat.title}</h3>
+                </div>
+            `;
+            subCategoriesList.innerHTML += card;
+        });
 
-    // Funções para o chatbot
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', sender === 'ia' ? 'ia-message' : 'user-message');
-        messageDiv.textContent = text;
-        iaChatMessages.appendChild(messageDiv);
-        iaChatMessages.scrollTop = iaChatMessages.scrollHeight;
+        document.querySelectorAll('.sub-category-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = e.currentTarget.dataset.target;
+                changeScreen(targetId);
+            });
+        });
     }
+    
+    // Função para renderizar as telas de conteúdo das sub-categorias
+    function renderContentScreen(contentData) {
+        const screenId = contentData.target;
+        const screenElement = document.getElementById(screenId);
+        
+        if (screenElement) {
+            let contentHTML = `
+                <div class="flex items-center justify-start gap-4 mb-4">
+                    <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold uppercase text-gray-800">${contentData.title}</h2>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <p class="text-gray-700 mb-4">${contentData.content.replace(/\n/g, '<br>')}</p>
+                </div>
+            `;
 
-    async function handleChatInput() {
-        const text = iaChatInput.value.trim();
-        if (text) {
-            addMessage(text, 'user');
-            iaChatInput.value = '';
-            
-            const typingIndicator = document.createElement('div');
-            typingIndicator.classList.add('ia-loading-message');
-            typingIndicator.textContent = 'A IA está respondendo...';
-            iaChatMessages.appendChild(typingIndicator);
-            iaChatMessages.scrollTop = iaChatMessages.scrollHeight;
-
-            try {
-                // Simulação da chamada de API para o Hugging Face
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                iaChatMessages.removeChild(typingIndicator);
-                const iaResponse = "Olá! Sua pergunta foi recebida. Como uma IA da Pesca, posso te dar informações sobre regulamentação, dicas de equipamentos e espécies de peixes. Qual é a sua pergunta?";
-                addMessage(iaResponse, 'ia');
-            } catch (error) {
-                console.error("Erro ao comunicar com a IA:", error);
-                iaChatMessages.removeChild(typingIndicator);
-                addMessage("Desculpe, não consegui me conectar. Tente novamente mais tarde.", 'ia');
+            // Adiciona uma lista se o conteúdo for de tamanhos mínimos
+            if (contentData.icon === "fa-ruler-horizontal") {
+                contentHTML = `
+                    <div class="flex items-center justify-start gap-4 mb-4">
+                        <button class="back-to-fishing-info-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <h2 class="text-2xl font-bold uppercase text-gray-800">${contentData.title}</h2>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <p class="text-gray-700 mb-4">${contentData.content.split('**Medidas Mínimas:**')[0]}</p>
+                        <h3 class="font-bold text-lg mb-2">Medidas Mínimas:</h3>
+                        <ul class="flex flex-col gap-2">
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Tainha</span>
+                                <span>30 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Pampo</span>
+                                <span>25 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Robalo</span>
+                                <span>35 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Corvina</span>
+                                <span>20 cm</span>
+                            </li>
+                        </ul>
+                    </div>
+                `;
             }
+            
+            screenElement.innerHTML = contentHTML;
+            screenElement.querySelector('.back-to-fishing-info-btn').addEventListener('click', () => {
+                changeScreen('fishing-info');
+            });
         }
     }
 
-    iaChatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            handleChatInput();
+    // Função para renderizar a lista de peixes
+    function renderFishList() {
+        fishList.innerHTML = '';
+        fishData.forEach((fish, index) => {
+            const card = `
+                <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4 cursor-pointer fish-card" data-index="${index}">
+                    <img src="${fish.imageUrl}" alt="Imagem do Peixe" class="w-16 h-16 object-cover rounded-full">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg">${fish.name}</h3>
+                        <p class="text-sm text-gray-500">${fish.bio.substring(0, 50)}...</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+            `;
+            fishList.innerHTML += card;
+        });
+
+        document.querySelectorAll('.fish-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const index = e.currentTarget.dataset.index;
+                showFishModal(fishData[index]);
+            });
+        });
+    }
+
+    function showFishModal(fish) {
+        modalFishImg.src = fish.imageUrl;
+        modalFishName.textContent = fish.name;
+        modalFishBio.textContent = fish.bio;
+        modalFishLocais.textContent = `Melhores locais: ${fish.locais}`;
+        modalFishEpoca.textContent = `Melhor época: ${fish.epoca}`;
+        modalFishMares.textContent = `Melhores marés: ${fish.mares}`;
+        modalFishIscas.textContent = `Melhores iscas: ${fish.iscas}`;
+        fishModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideFishModal() {
+        fishModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    closeFishModalBtn.addEventListener('click', hideFishModal);
+    fishModal.addEventListener('click', (e) => {
+        if (e.target === fishModal) {
+            hideFishModal();
+        }
+    });
+    
+    backToFishingInfoBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            changeScreen('fishing-info');
+        });
+    });
+
+    // Gemini API functions
+    async function callGeminiApiWithImage(imageData) {
+        // Simulação da chamada da API Gemini com imagem
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        return "Simulação de resposta da Gemini: \"Este peixe parece ser um Pampo. É um peixe esportivo muito apreciado e comum em praias de Maricá.\"";
+    }
+
+    // Event listeners para as novas funcionalidades IA
+    
+    fishImageInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                fishPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     });
 
-    iaChatSendBtn.addEventListener('click', handleChatInput);
-
+    identifyFishBtn.addEventListener('click', async () => {
+        const imageData = fishPreview.src;
+        if (imageData.startsWith('data:')) {
+            fishResult.textContent = 'Identificando peixe...';
+            const response = await callGeminiApiWithImage(imageData);
+            fishResult.textContent = response;
+        } else {
+            fishResult.textContent = 'Por favor, selecione uma imagem primeiro.';
+        }
+    });
+    
     // Função para abrir o menu lateral
     function openSidebar() {
         sidebar.classList.add('active');
@@ -824,34 +1248,50 @@
 
     // Função para mudar a tela exibida e atualizar o estado ativo dos botões
     function changeScreen(targetId) {
+        const targetScreen = document.getElementById(targetId);
+        if (!targetScreen) {
+            console.error(`Elemento com ID '${targetId}' não encontrado.`);
+            return;
+        }
+
         screens.forEach(screen => {
             screen.classList.remove('active');
         });
-        document.getElementById(targetId).classList.add('active');
+        targetScreen.classList.add('active');
 
         if (targetId === 'home') {
             renderInstagramFeed();
-        }
-        if (targetId === 'fishing-news') {
-            renderFishingNews();
-        }
-        if (targetId === 'tide-table') {
+        } else if (targetId === 'tide-table') {
             currentDayIndex = 0;
             fetchTideData(currentDayIndex);
-        }
-        if (targetId === 'events') {
+        } else if (targetId === 'fishing-news') {
+            renderFishingNews();
+        } else if (targetId === 'events') {
             renderEvents();
+        } else if (targetId === 'fishing-info') {
+            renderSubCategories();
+        } else if (targetId === 'common-fish') {
+            renderFishList();
+        } else if (targetId === 'ia-features') {
+             // A tela de IA foi movida, não precisa de renderização especial
+        } else {
+            const subCatData = allSubCategoriesData.find(cat => cat.target === targetId);
+            if (subCatData) {
+                renderContentScreen(subCatData);
+            }
         }
-
+        
         sidebarNavItems.forEach(item => {
-            if (item.dataset.target === targetId) {
+            const itemTarget = item.dataset.target;
+            if (itemTarget === targetId) {
                 item.classList.add('bg-red-100', 'text-red-600');
             } else {
                 item.classList.remove('bg-red-100', 'text-red-600');
             }
         });
         bottomNavButtons.forEach(item => {
-            if (item.dataset.target === targetId) {
+            const itemTarget = item.dataset.target;
+            if (itemTarget === targetId) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
