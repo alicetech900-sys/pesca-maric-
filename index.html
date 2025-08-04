@@ -274,7 +274,7 @@
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Início</h2>
                 <h3 class="text-lg font-medium text-gray-600 mb-4">Últimas Publicações do Instagram</h3>
                 <div id="instagram-feed" class="flex flex-col gap-4">
-                    <div class='sk-instagram-feed' data-embed-id='25584712'></div>
+                    <div class="elfsight-app-319fa19a-dd36-4a5f-8cff-1dc6f3c6d518" data-elfsight-app-lazy></div>
                 </div>
             </section>
             
@@ -311,29 +311,9 @@
                     <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
                         <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
                         <div class="flex-1">
-                            <h3 class="font-semibold text-lg">Campeonato de Pesca</h3>
-                            <p class="text-sm text-gray-500 mt-1">07 mai 2024</p>
-                            <p class="text-sm text-gray-500">08:00 - Praia de Itaipuaçu</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-                    </div>
-                    <!-- Cartão de Evento 2 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
-                        <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-lg">Circuito de Pesca Esportiva</h3>
-                            <p class="text-sm text-gray-500 mt-1">21 jul 2024</p>
-                            <p class="text-sm text-gray-500">09:00 - Lagoa de Aratibá</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-                    </div>
-                    <!-- Cartão de Evento 3 (exemplo adicional) -->
-                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
-                        <img src="https://placehold.co/80x80/9ca3af/fff?text=EVENTO" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-lg">Workshop de Pesca</h3>
-                            <p class="text-sm text-gray-500 mt-1">15 ago 2024</p>
-                            <p class="text-sm text-gray-500">14:00 - Sede da Secretaria</p>
+                            <h3 class="font-semibold text-lg">4° Etapa do Circuito de Pesca Artesanal com Tarrafa</h3>
+                            <p class="text-sm text-gray-500 mt-1">DOMINGO, 24 AGO 2025</p>
+                            <p class="text-sm text-gray-500">07:00 - Ponte Preta, Ao lado da ponte principal</p>
                         </div>
                         <i class="fa-solid fa-chevron-right text-gray-400"></i>
                     </div>
@@ -425,6 +405,7 @@
     </nav>
 </div>
 
+<script src="https://static.elfsight.com/platform/platform.js" async></script>
 <script>
     // Referências aos elementos HTML
     const sidebar = document.getElementById('sidebar');
@@ -513,12 +494,6 @@
     // Chave de API do Hugging Face para o chatbot
     const hfApiKey = "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";
     const hfApiUrl = "https://api-inference.huggingface.co/models/google/gemma-2b"; // URL de um modelo de linguagem para simulação
-
-    // Inclusão do script do SociableKIT para o feed do Instagram
-    const script = document.createElement('script');
-    script.src = 'https://widgets.sociablekit.com/instagram-feed/widget.js';
-    script.defer = true;
-    document.head.appendChild(script);
 
     // Função para renderizar o feed do Instagram
     function renderInstagramFeed() {
