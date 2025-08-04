@@ -310,7 +310,7 @@
     <div id="sidebar" class="sidebar p-4">
         <!-- Cabeçalho do menu lateral com a logo -->
         <div class="p-4 mb-8 text-center flex flex-col items-center gap-4">
-            <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="Logo da Secretaria de Pesca de Maricá" class="w-24 h-24 object-cover rounded-full border-2 border-gray-200">
+            <img src="uploaded:Captura de tela 2025-08-03 021629.png-b68a16ea-c1f4-4704-b6f0-064b1b309a46" alt="Logo da Secretaria de Pesca de Maricá" class="w-24 h-24 object-cover rounded-full border-2 border-gray-200">
             <h2 class="text-xl font-bold">Secretaria de Pesca de Maricá</h2>
         </div>
 
@@ -356,7 +356,7 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center justify-center gap-2 absolute left-1/2 -translate-x-1/2">
-                <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="Logo da Secretaria de Pesca de Maricá" class="h-10 w-10 object-cover rounded-full">
+                <img src="uploaded:Captura de tela 2025-08-03 021629.png-b68a16ea-c1f4-4704-b6f0-064b1b309a46" alt="Logo da Secretaria de Pesca de Maricá" class="h-10 w-10 object-cover rounded-full">
                 <span class="text-base font-bold text-gray-800 tracking-wider">Secretaria de Pesca de Maricá</span>
             </div>
             <div class="w-8"></div> <!-- Espaçamento para centralizar o título -->
@@ -388,7 +388,7 @@
             </section>
 
             <!-- Tela: Eventos e Competições -->
-            <section id="events" class="screen active">
+            <section id="events" class="screen">
                 <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Eventos e Competições</h2>
                 <div id="events-list" class="flex flex-col gap-4">
                     <!-- Eventos serão renderizados aqui -->
@@ -401,7 +401,7 @@
             </section>
             
             <!-- Tela: Notícias da Pesca -->
-            <section id="fishing-news" class="screen">
+            <section id="fishing-news" class="screen active">
                 <h2 class="text-2xl font-bold uppercase text-center mb-4 text-gray-800">Notícias da Pesca</h2>
                 <div id="news-list" class="flex flex-col gap-4">
                     <!-- As notícias serão inseridas aqui via JavaScript -->
@@ -463,12 +463,13 @@
                     </button>
                     <h2 class="text-2xl font-bold uppercase text-gray-800">Tamanhos Mínimos para Captura</h2>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="bg-white p-6 rounded-xl shadow-md overflow-y-auto max-h-96">
                     <p class="text-gray-700 mb-4">
                         A captura de peixes com tamanho inferior ao mínimo permitido por lei é considerada pesca predatória. Abaixo estão as medidas de algumas espécies comuns na região.
-                        Malha da rede: mínimo 25 mm entre nós para peixes; 12 mm para camarões.
-                        Para pescadores amadores: limite de 15 kg + 1 exemplar em pescarias em água salgada.
+                        Malha da rede: mínimo 25mm entre nós para peixes; 12mm para camarões.
+                        Para pescadores amadores: limite de 15kg + 1 exemplar em pescarias em água salgada.
                     </p>
+                    <h3 class="font-bold text-lg mb-2">Medidas Mínimas:</h3>
                     <ul class="flex flex-col gap-2">
                         <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
                             <span>Tainha</span>
@@ -561,17 +562,15 @@
                     </button>
                     <h2 class="text-2xl font-bold uppercase text-gray-800">Melhores Horários de Pesca</h2>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="bg-white p-6 rounded-xl shadow-md overflow-y-auto max-h-96">
                     <h3 class="font-bold text-lg mb-2">Orientações Gerais:</h3>
                     <p class="text-gray-700 mb-4">
                         A pesca é influenciada por fatores como a maré, a lua e o horário do dia.
                     </p>
                     <ul class="list-disc list-inside text-gray-700 text-sm">
-                        <li>Manhã (6h às 10h): Período ideal, peixes estão ativos e se alimentando.</li>
-                        <li>Entardecer (17h às 19h): Outro bom momento para pescar, com peixes mais ativos antes de escurecer.</li>
-                        <li>Madrugada (3h às 6h): Ótimo para peixes predadores como robalo e corvina.</li>
-                        <li>Noite (19h às 23h): Bom para peixes de fundo, como corvina e pescada.</li>
-                        <li>Prefira pescar durante a maré enchente ou quando a maré está baixando (vazante). Os dias de lua cheia e lua nova costumam ser os melhores para a pesca. Evite pescar nas horas mais quentes do dia (meio-dia).</li>
+                        <li>**Maré:** A mudança de maré (virada da maré) é um dos melhores momentos para pescar. A maré enchente também é favorável.</li>
+                        <li>**Lua:** Luas cheia e nova (marés vivas) geralmente são mais produtivas.</li>
+                        <li>**Horário:** O nascer e o pôr do sol são períodos de maior atividade para a maioria dos peixes.</li>
                     </ul>
                 </div>
             </section>
@@ -583,9 +582,9 @@
                     </button>
                     <h2 class="text-2xl font-bold uppercase text-gray-800">Licenciamento e Documentos</h2>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="bg-white p-6 rounded-xl shadow-md overflow-y-auto max-h-96">
                     <p class="text-gray-700 mb-4">
-                        Para obter a Carteira de Pescador Amador em Maricá (RJ), você deve seguir os procedimentos estabelecidos pelo Governo Federal. A licença é emitida pela Secretaria de Aquicultura e Pesca do Ministério da Agricultura, Pecuária e Abastecimento (MAPA) e tem validade de 1 ano em todo o território nacional.
+                        A licença de pesca amadora é obrigatória para a pesca de linha e anzol, tanto em água doce quanto salgada.
                     </p>
                     <h3 class="font-bold text-lg mb-2">Como tirar:</h3>
                     <ul class="list-disc list-inside text-gray-700 text-sm mb-4">
@@ -593,14 +592,14 @@
                         <li>Preencha o formulário com seus dados pessoais.</li>
                         <li>Pague a taxa de emissão da licença.</li>
                     </ul>
-                    <a href="#" class="text-blue-600 font-semibold hover:underline">https://www.gov.br/pt-br/servicos/solicitar-licenca-de-pescador-amador</a>
+                    <a href="https://www.gov.br/pt-br/servicos/solicitar-licenca-de-pescador-amador" class="text-blue-600 font-semibold hover:underline" target="_blank">Link para o site oficial</a>
                 </div>
             </section>
 
              <!-- Tela de Identificação de Peixe -->
             <section id="ia-features" class="screen">
                 <div class="flex items-center justify-start gap-4 mb-4">
-                    <button id="back-to-home-btn" class="text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                    <button class="back-to-home-btn text-gray-700 text-xl p-2 rounded-full hover:bg-gray-200 transition-colors">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
                     <h2 class="text-2xl font-bold uppercase text-gray-800">Identificador de Peixe</h2>
@@ -643,9 +642,7 @@
                 <i class="fa-solid fa-times"></i>
             </button>
             <div class="flex flex-col items-center">
-                <div class="relative w-full mb-4 rounded-lg overflow-hidden" style="padding-top: 56.25%;"> <!-- 16:9 Aspect Ratio -->
-                  <img id="modal-fish-img" src="" alt="Imagem do Peixe" class="absolute top-0 left-0 w-full h-full object-cover">
-                </div>
+                <img id="modal-fish-img" src="" alt="Imagem do Peixe" class="w-40 h-auto mb-4 rounded-lg">
                 <h3 id="modal-fish-name" class="font-bold text-2xl mb-2"></h3>
                 <p id="modal-fish-bio" class="text-gray-700 text-base text-center"></p>
             </div>
@@ -818,7 +815,7 @@
         {
             name: "Tainha",
             imageUrl: "https://i.pinimg.com/736x/d2/be/cb/d2becbf83dbd6b4395aac98dfa5c14b2.jpg",
-            bio: "Peixe marinho e estuarino da família Mugilidae, muito comum no sudeste e sul do Brasil. Vive em águas costeiras e salobras, alimentando-se de matéria orgânica e microalgas. Importante economicamente e muito valorizada na culinária (assada, recheada, com ova). Pode atingir até 70 cm e pesar 3 kg.",
+            bio: "Peixe marinho e estuarino da família Mugilidae, muito comum no sudeste e sul do Brasil. Vive em águas costeiras e salobras, alimentando-se de matéria orgânica e microalgas. Importante economicamente e muito valorizada na culinária (assada, recheada, com ova). Pode atingir até 70 cm e pesar 3 kg.",
             locais: "Praia da Barra de Maricá, Ponte Preta, Ponta do Boqueirão, Canal da Barra e entorno da Lagoa de Maricá, Restingas (em redes, espinhéis ou tarrafas).",
             epoca: "Maio a agosto, com pico em junho e julho (época da desova e migração).",
             mares: "Maré enchendo (subindo) e pico da maré cheia, Por quê? A tainha se aproxima da costa e estuários com a maré enchendo, pois entra para se alimentar. E o melhor horário é Início da manhã ou fim da tarde, com água movimentada.",
@@ -828,16 +825,16 @@
             name: "Pampo",
             imageUrl: "https://i.pinimg.com/736x/88/bb/cb/88bbcb2bdd83b7ef6865626a7be7eb3f.jpg",
             bio: "Peixe da família Carangidae, de corpo alto e prateado com tons amarelados. Vive em praias de arrebentação, águas rasas e fundos arenosos. Muito apreciado na pesca esportiva por sua força e também na culinária. Pode chegar a 50 cm e 5–6 kg.",
-            locais: "Praia da Barra de Maricá, Praia de Cordeirinho, Praia de Ponta Negra, Arrebentações e “canais” formados na maré.",
-            epoca: "Mais ativo na primavera e verão (outubro a março), quando as águas estão mais quentes.",
+            locais: "Praias com ondas médias e fundos de areia.",
+            epoca: "O ano todo, mas mais ativo no verão.",
             mares: "Maré enchendo e cheia, Por quê? O pampo se alimenta em regiões de arrebentação e canais de areia, onde a água cobre o solo e movimenta a comida. E o melhor horário é duas horas antes até uma hora depois do pico da maré cheia.",
             iscas: "Camarão (vivo ou morto), Corrupto, Tatuí, Minhoca de praia. Também aceita isca artificial pequena em águas claras."
         },
         {
             name: "Robalo",
             imageUrl: "https://paginasdabio.ufpr.br/wp-content/uploads/2023/08/image-30.jpg",
-            bio: "Espécie predadora e costeira, comum em estuários, manguezais e desembocaduras de rios. Robalo-peva (C. parallelus) é menor, e o robalo-flecha (C. undecimalis) é maior (até 1 m e 10 kg). Muito valorizado pela pesca esportiva por ser brigador e pela carne nobre.",
-            locais: "Desembocadura do Canal da Barra, Manguezais e margens da Lagoa de Maricá, Canais salobros e fundos com estrutura (troncos, pedras, buracos)",
+            bio: "Espécie predadora e costeira, comum em estuários, manguezais e desembocaduras de rios. Robalo-peva (C. parallelus) é menor, e o robalo-flecha (C. undecimalis) é maior (até 1 m e 10 kg). Muito valorizado pela pesca esportiva por ser brigador e pela carne nobre.",
+            locais: "Desembocadura do Canal da Barra, Manguezais e margens da Lagoa de Maricá, Canais salobros e fundos com estrutura (troncos, pedras, mangue)",
             epoca: "Mais ativo de setembro a abril. Entre maio e julho, em alguns estados ocorre defeso — é bom confirmar se há proibição local.",
             mares: "Marés de lua (cheia e nova) são as melhores.",
             iscas: "Começo da enchente ou começo da vazante, Por quê? Robalos gostam de caçar na corrente, perto de estruturas (troncos, pedras, mangue). Maré em movimento ativa o apetite deles. E o melhor horário é fim da tarde, madrugada ou amanhecer — principalmente quando a água está começando a correr."
@@ -873,16 +870,18 @@
     // Dados para as outras sub-categorias (simulados)
     const closedSeasonData = {
         title: "Período de Defeso",
-        content: `O período de Defeso é a época em que a pesca de uma ou mais espécies é proibida para garantir sua reprodução e a manutenção dos estoques pesqueiros.
+        content: `É o período em que a pesca de determinadas espécies é proibida para proteger a reprodução dos peixes e garantir a preservação ambiental. Durante esse tempo, pescadores artesanais cadastrados recebem um benefício chamado seguro-defeso.
         
-        **Defeso em Maricá:** O período de defeso na região de Maricá, para algumas espécies como a Tainha, geralmente ocorre de **Maio a Julho**. É importante sempre consultar a legislação mais recente para evitar multas.`,
+        **Defeso em Maricá:** O defeso em Maricá segue os períodos definidos para o litoral do Rio de Janeiro. Exemplos comuns: Camarões marinhos: proibida a pesca de 1º de março a 31 de maio. Crustáceos de lagoa (como em Araruama, que influencia a região): pesca proibida até 30 de junho.`,
         icon: "fa-ban",
         target: "fishing-closed-season"
     };
 
     const minSizesData = {
         title: "Tamanhos Mínimos para Captura",
-        content: `A captura de peixes com tamanho inferior ao mínimo permitido por lei é considerada pesca predatória. Abaixo estão as medidas de algumas espécies comuns na região.`,
+        content: `A captura de peixes com tamanho inferior ao mínimo permitido por lei é considerada pesca predatória. Abaixo estão as medidas de algumas espécies comuns na região.
+        Malha da rede: mínimo 25mm entre nós para peixes; 12mm para camarões.
+        Para pescadores amadores: limite de 15kg + 1 exemplar em pescarias em água salgada.`,
         icon: "fa-ruler-horizontal",
         target: "min-sizes"
     };
@@ -891,17 +890,21 @@
         title: "Melhores Horários de Pesca",
         content: `A pesca é influenciada por fatores como a maré, a lua e o horário do dia.
         
-        **Orientações Gerais:**
-        - **Maré:** A mudança de maré (virada da maré) é um dos melhores momentos para pescar. A maré enchente também é favorável.
-        - **Lua:** Luas cheia e nova (marés vivas) geralmente são mais produtivas.
-        - **Horário:** O nascer e o pôr do sol são períodos de maior atividade para a maioria dos peixes.`,
+        Orientações Gerais:
+        - Manhã (6h às 10h): Período ideal, peixes estão ativos e se alimentando.
+        - Entardecer (17h às 19h): Outro bom momento para pescar, com peixes mais ativos antes de escurecer.
+        - Madrugada (3h às 6h): Ótimo para peixes predadores como robalo e corvina.
+        - Noite (19h às 23h): Bom para peixes de fundo, como corvina e pescada.
+        - Maré: Prefira pescar durante a maré enchente ou quando a maré está baixando (vazante).
+        - Lua: Luas cheia e nova (marés vivas) geralmente são mais produtivas.
+        - Evite: Pescar nas horas mais quentes do dia (meio-dia).`,
         icon: "fa-clock",
         target: "best-fishing-times"
     };
 
     const licensingData = {
         title: "Licenciamento e Documentos",
-        content: `A licença de pesca amadora é obrigatória para a pesca de linha e anzol, tanto em água doce quanto salgada.
+        content: `Para obter a Carteira de Pescador Amador em Maricá (RJ), você deve seguir os procedimentos estabelecidos pelo Governo Federal. A licença é emitida pela Secretaria de Aquicultura e Pesca do Ministério da Agricultura, Pecuária e Abastecimento (MAPA) e tem validade de 1 ano em todo o território nacional.
         
         **Como tirar:**
         1. Acesse o portal do Ministério da Pesca e Aquicultura.
@@ -1170,7 +1173,7 @@
                     </button>
                     <h2 class="text-2xl font-bold uppercase text-gray-800">${contentData.title}</h2>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="bg-white p-6 rounded-xl shadow-md overflow-y-auto max-h-[calc(100vh-250px)]">
                     <p class="text-gray-700 mb-4">${contentData.content.replace(/\n/g, '<br>')}</p>
                 </div>
             `;
@@ -1184,25 +1187,89 @@
                         </button>
                         <h2 class="text-2xl font-bold uppercase text-gray-800">${contentData.title}</h2>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-white p-6 rounded-xl shadow-md overflow-y-auto max-h-[calc(100vh-250px)]">
                         <p class="text-gray-700 mb-4">${contentData.content.split('**Medidas Mínimas:**')[0]}</p>
                         <h3 class="font-bold text-lg mb-2">Medidas Mínimas:</h3>
                         <ul class="flex flex-col gap-2">
                             <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
                                 <span>Tainha</span>
-                                <span>30 cm</span>
-                            </li>
-                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
-                                <span>Pampo</span>
-                                <span>25 cm</span>
-                            </li>
-                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
-                                <span>Robalo</span>
                                 <span>35 cm</span>
                             </li>
                             <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
                                 <span>Corvina</span>
+                                <span>25 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Pampo (Gordinho)</span>
+                                <span>15 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Pampo-galhudo</span>
+                                <span>40 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Pampo-amarelo</span>
+                                <span>25 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Peixe-rei</span>
+                                <span>10 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Robalo (Peva)</span>
+                                <span>30 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Robalo-flecha</span>
+                                <span>60 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Tilápia</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Savelha</span>
+                                <span>15 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Parati (Saúba)</span>
                                 <span>20 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Carapicu</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Piraúna</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Acará</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Bagre</span>
+                                <span>12 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Bagre-branco</span>
+                                <span>40 cm</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Enchoveta</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Barrigudinho</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Ubarana</span>
+                                <span>Sem limite</span>
+                            </li>
+                            <li class="flex justify-between font-semibold text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                <span>Fraquéco</span>
+                                <span>Sem limite</span>
                             </li>
                         </ul>
                     </div>
@@ -1271,37 +1338,6 @@
         });
     });
 
-    // Gemini API functions
-    async function callGeminiApiWithImage(imageData) {
-        // Simulação da chamada da API Gemini com imagem
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        return "Simulação de resposta da Gemini: \"Este peixe parece ser um Pampo. É um peixe esportivo muito apreciado e comum em praias de Maricá.\"";
-    }
-
-    // Event listeners para as novas funcionalidades IA
-    
-    fishImageInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                fishPreview.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    identifyFishBtn.addEventListener('click', async () => {
-        const imageData = fishPreview.src;
-        if (imageData.startsWith('data:')) {
-            fishResult.textContent = 'Identificando peixe...';
-            const response = await callGeminiApiWithImage(imageData);
-            fishResult.textContent = response;
-        } else {
-            fishResult.textContent = 'Por favor, selecione uma imagem primeiro.';
-        }
-    });
-    
     // Função para abrir o menu lateral
     function openSidebar() {
         sidebar.classList.add('active');
