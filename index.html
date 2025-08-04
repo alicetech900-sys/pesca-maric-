@@ -201,20 +201,48 @@
             color: #6b7280;
             font-style: italic;
         }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
 <div class="app-container">
     
-    <!-- Overlay para fechar o menu lateral -->
+    <!-- Overlay para fechar o menu lateral e modais -->
     <div id="overlay" class="overlay"></div>
 
     <!-- Menu Lateral (Sidebar) -->
     <div id="sidebar" class="sidebar p-4">
         <!-- Cabeçalho do menu lateral com a logo -->
         <div class="p-4 mb-8 text-center flex flex-col items-center gap-4">
-            <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="w-24 h-24 object-cover rounded-full border-2 border-gray-200">
+            <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="Logo da Secretaria de Pesca de Maricá" class="w-24 h-24 object-cover rounded-full border-2 border-gray-200">
             <h2 class="text-xl font-bold">Secretaria de Pesca de Maricá</h2>
         </div>
 
@@ -233,13 +261,13 @@
                 <i class="fa-solid fa-water w-6 text-center"></i>
                 <span>Tábua de Maré</span>
             </button>
-            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-news">
-                <i class="fa-solid fa-newspaper w-6 text-center"></i>
-                <span>Notícias da Pesca</span>
-            </button>
             <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="events">
                 <i class="fa-solid fa-calendar-alt w-6 text-center"></i>
                 <span>Eventos e Competições</span>
+            </button>
+            <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-news">
+                <i class="fa-solid fa-newspaper w-6 text-center"></i>
+                <span>Notícias da Pesca</span>
             </button>
             <button class="nav-item flex items-center gap-4 p-4 rounded-xl font-medium text-lg hover:bg-gray-100 transition-colors" data-target="fishing-info">
                 <i class="fa-solid fa-fish w-6 text-center"></i>
@@ -260,7 +288,7 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
             <div class="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-                <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" class="h-10 w-10 object-cover rounded-full">
+                <img src="https://i.pinimg.com/736x/54/07/e2/5407e20320857e626a0c0b104529f87c.jpg" alt="Logo da Secretaria de Pesca de Maricá" class="h-10 w-10 object-cover rounded-full">
                 <span class="text-lg font-bold text-gray-800 hidden md:block">Secretaria de Pesca de Maricá</span>
             </div>
             <div class="w-8"></div> <!-- Espaçamento para centralizar o título -->
@@ -292,7 +320,7 @@
             </section>
 
             <!-- Tela: Notícias da Pesca -->
-            <section id="fishing-news" class="screen active">
+            <section id="fishing-news" class="screen">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Notícias da Pesca</h2>
                 <div id="news-list" class="flex flex-col gap-4">
                     <!-- As notícias serão inseridas aqui via JavaScript -->
@@ -304,18 +332,14 @@
             </section>
 
             <!-- Tela: Eventos e Competições -->
-            <section id="events" class="screen">
+            <section id="events" class="screen active">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Eventos e Competições</h2>
-                <div class="flex flex-col gap-4">
-                    <!-- Cartão de Evento 1 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4">
-                        <img src="https://i.pinimg.com/736x/6a/4d/70/6a4d70087be2266f18c85eada1dda642.jpg" alt="https://i.pinimg.com/736x/6a/4d/70/6a4d70087be2266f18c85eada1dda642.jpg" class="w-20 h-20 object-cover rounded-lg">
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-lg">4° Etapa do Circuito de Pesca Artesanal com Tarrafa</h3>
-                            <p class="text-sm text-gray-500 mt-1">DOMINGO, 24 AGO 2025</p>
-                            <p class="text-sm text-gray-500">07:00 - Ponte Preta, Ao lado da ponte principal</p>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                <div id="events-list" class="flex flex-col gap-4">
+                    <!-- Eventos serão renderizados aqui -->
+                    <!-- Placeholder de carregamento -->
+                    <div class="loading-indicator">
+                        <i class="fa-solid fa-calendar-alt fa-spin-pulse fa-2x"></i>
+                        <p>Carregando eventos...</p>
                     </div>
                 </div>
             </section>
@@ -358,20 +382,38 @@
             <!-- Tela: IA da Pesca -->
             <section id="ia-chat" class="screen">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">IA da Pesca</h2>
-                <div class="w-full h-[600px] rounded-xl overflow-hidden shadow-md">
-                    <iframe
-                        src="https://huggingface.co/spaces/kenxitou/pesca-marica-chat?embed=true"
-                        src="https://huggingface.co/spaces/kenxitou/pesca-marica-chat?embed=true"
-                        width="100%"
-                        height="100%"
-                        frameborder="0"
-                        style="border:0;">
-                    </iframe>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages">
+                        <div class="message ia-message">
+                            Olá! Eu sou a IA da Pesca. Pergunte-me qualquer coisa sobre pesca, regulamentação ou dicas.
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua pergunta...">
+                        <button id="chat-send-btn" class="chat-send-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
             </section>
 
         </div>
     </main>
+
+    <!-- Modal para detalhes do evento -->
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-700 text-2xl p-2 rounded-full hover:bg-gray-200 transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <img id="modal-event-img" src="" alt="Imagem do Evento" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 id="modal-event-title" class="font-bold text-2xl mb-2"></h3>
+            <p id="modal-event-date" class="text-sm text-gray-500"></p>
+            <p id="modal-event-time" class="text-sm text-gray-500"></p>
+            <p id="modal-event-location" class="text-sm text-gray-500 mb-4"></p>
+            <p id="modal-event-description" class="text-gray-700 text-base"></p>
+        </div>
+    </div>
 
     <!-- Menu de Navegação Inferior -->
     <nav class="bottom-nav">
@@ -383,13 +425,13 @@
             <i class="icon fa-solid fa-water"></i>
             <span class="label">Maré</span>
         </a>
-        <a class="nav-button active" href="#" data-target="fishing-news">
-            <i class="icon fa-solid fa-newspaper"></i>
-            <span class="label">Notícias</span>
-        </a>
         <a class="nav-button" href="#" data-target="events">
             <i class="icon fa-solid fa-calendar-alt"></i>
             <span class="label">Eventos</span>
+        </a>
+        <a class="nav-button active" href="#" data-target="fishing-news">
+            <i class="icon fa-solid fa-newspaper"></i>
+            <span class="label">Notícias</span>
         </a>
         <a class="nav-button" href="#" data-target="fishing-info">
             <i class="icon fa-solid fa-fish"></i>
@@ -415,9 +457,20 @@
     const instagramFeed = document.getElementById('instagram-feed');
     const tideContent = document.getElementById('tide-content');
     const newsList = document.getElementById('news-list');
+    const eventsList = document.getElementById('events-list');
     const iaChatInput = document.getElementById('chat-input');
     const iaChatSendBtn = document.getElementById('chat-send-btn');
     const iaChatMessages = document.getElementById('chat-messages');
+
+    // Modal elements
+    const eventModal = document.getElementById('event-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalEventImg = document.getElementById('modal-event-img');
+    const modalEventTitle = document.getElementById('modal-event-title');
+    const modalEventDate = document.getElementById('modal-event-date');
+    const modalEventTime = document.getElementById('modal-event-time');
+    const modalEventLocation = document.getElementById('modal-event-location');
+    const modalEventDescription = document.getElementById('modal-event-description');
     
     // Dados simulados da tábua de maré para os próximos dias
     const tideData = {
@@ -470,32 +523,48 @@
             title: "Tainha: Saiba onde e como pescar na Costa do Sol",
             snippet: "Com a temporada de tainha a todo vapor, pescadores dão dicas para a melhor pesca na região de Maricá.",
             imageUrl: "https://placehold.co/80x80/a0c4ff/000?text=Noticia+1",
-            url: "#"
+            url: "https://example.com/noticia-1"
         },
         {
             title: "Guia de pesca sustentável em Maricá",
             snippet: "A Secretaria de Pesca lança um guia completo com boas práticas para a preservação da vida marinha.",
             imageUrl: "https://placehold.co/80x80/c4a0ff/000?text=Noticia+2",
-            url: "#"
+            url: "https://example.com/noticia-2"
         },
         {
             title: "Conheça os peixes mais comuns na região de Maricá",
             snippet: "Um artigo detalhado sobre as espécies que habitam a costa maricaense e seus períodos de defeso.",
             imageUrl: "https://placehold.co/80x80/a0ffc4/000?text=Noticia+3",
-            url: "#"
+            url: "https://example.com/noticia-3"
+        }
+    ];
+
+    const eventsData = [
+        {
+            title: "4° Etapa do Circuito de Pesca Artesanal com Tarrafa",
+            date: "DOMINGO, 24 AGO 2025",
+            time: "07:00",
+            location: "Ponte Preta, Ao lado da ponte principal",
+            imageUrl: "https://i.pinimg.com/736x/6a/4d/70/6a4d70087be2266f18c85eada1dda642.jpg",
+            description: "Participe do nosso grande campeonato de tarrafa! Venha competir com pescadores artesanais de toda a região e mostrar suas habilidades. Prêmios, sorteios, shows ao vivo e muito mais!"
         }
     ];
 
     let currentDayIndex = 0; // Começa com "Hoje"
     
     // Chave de API do Hugging Face para o chatbot
-    const hfApiKey = "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";
-    const hfApiUrl = "https://api-inference.huggingface.co/models/google/gemma-2b"; // URL de um modelo de linguagem para simulação
+    const hfApiKey = "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";
+    const hfApiUrl = "https://kenxitou-pesca-marica-chat.hf.space/run/predict";
+
+    // Inclusão do script do Elfsight para o feed do Instagram
+    const elfsightScript = document.createElement('script');
+    elfsightScript.src = 'https://static.elfsight.com/platform/platform.js';
+    elfsightScript.async = true;
+    document.head.appendChild(elfsightScript);
 
     // Função para renderizar o feed do Instagram
     function renderInstagramFeed() {
-        // O widget do SociableKIT fará o carregamento dos dados de forma assíncrona.
-        // A função de renderização apenas garante que a tela seja exibida.
+        // O widget do Elfsight fará o carregamento dos dados de forma assíncrona.
     }
     
     // Função para renderizar o gráfico de marés
@@ -544,7 +613,6 @@
 
     // Função para buscar e exibir a tábua de maré (simulada)
     async function fetchTideData(dayIndex) {
-        // Exibe o indicador de carregamento
         tideContent.innerHTML = `
             <div class="loading-indicator">
                 <i class="fa-solid fa-water fa-spin-pulse fa-2x"></i>
@@ -552,23 +620,19 @@
             </div>
         `;
         
-        // Simulação de chamada de API para obter dados de maré
         await new Promise(resolve => setTimeout(resolve, 1500));
 
         const currentDayData = tideData.days[dayIndex];
         
-        // Limpa o conteúdo e exibe os dados simulados
         tideContent.innerHTML = `
             <div class="bg-white p-4 rounded-xl shadow-md">
                 <div class="flex items-center justify-between">
                     <span class="text-lg font-bold">${currentDayData.date}</span>
                     <span class="text-sm text-gray-500">${tideData.city}</span>
                 </div>
-                <!-- Gráfico de Maré -->
                 <div class="relative h-64 mt-4">
                     <canvas id="tideChart"></canvas>
                 </div>
-                <!-- Detalhes da maré -->
                 <div class="flex justify-around mt-6">
                     ${currentDayData.tides.map(tide => `
                         <div class="flex flex-col items-center text-center">
@@ -579,7 +643,6 @@
                     `).join('')}
                 </div>
             </div>
-            <!-- Botões de navegação -->
             <div class="flex justify-between mt-4">
                 <button id="prev-day" class="p-2 rounded-full bg-gray-200 text-gray-700 disabled:opacity-50">
                     <i class="fa-solid fa-chevron-left"></i>
@@ -593,7 +656,6 @@
             </div>
         `;
         
-        // Adiciona event listeners aos novos botões de navegação
         const prevButton = document.getElementById('prev-day');
         const nextButton = document.getElementById('next-day');
         const todayButton = document.getElementById('today-btn');
@@ -621,7 +683,6 @@
     
     // Função para renderizar as notícias de pesca
     async function renderFishingNews() {
-        // Exibe o indicador de carregamento
         newsList.innerHTML = `
             <div class="loading-indicator">
                 <i class="fa-solid fa-newspaper fa-spin-pulse fa-2x"></i>
@@ -629,10 +690,8 @@
             </div>
         `;
         
-        // Simulação de um atraso na busca dos dados
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        // Limpa o conteúdo e exibe as notícias simuladas
         newsList.innerHTML = '';
         fishingNews.forEach(item => {
             const newsCard = `
@@ -647,14 +706,72 @@
             newsList.innerHTML += newsCard;
         });
     }
+
+    // Função para renderizar a lista de eventos
+    async function renderEvents() {
+        eventsList.innerHTML = `
+            <div class="loading-indicator">
+                <i class="fa-solid fa-calendar-alt fa-spin-pulse fa-2x"></i>
+                <p>Carregando eventos...</p>
+            </div>
+        `;
+        
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        eventsList.innerHTML = '';
+        eventsData.forEach((event, index) => {
+            const eventCard = `
+                <div class="bg-white p-4 rounded-xl shadow-md flex items-center gap-4 cursor-pointer event-card" data-index="${index}">
+                    <img src="${event.imageUrl}" alt="Imagem do Evento" class="w-20 h-20 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-lg">${event.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">${event.date}</p>
+                        <p class="text-sm text-gray-500">${event.time} - ${event.location}</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                </div>
+            `;
+            eventsList.innerHTML += eventCard;
+        });
+        
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const index = e.currentTarget.dataset.index;
+                showEventModal(eventsData[index]);
+            });
+        });
+    }
     
+    function showEventModal(event) {
+        modalEventImg.src = event.imageUrl;
+        modalEventTitle.textContent = event.title;
+        modalEventDate.textContent = event.date;
+        modalEventTime.textContent = event.time;
+        modalEventLocation.textContent = event.location;
+        modalEventDescription.textContent = event.description;
+        eventModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideEventModal() {
+        eventModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    closeModalBtn.addEventListener('click', hideEventModal);
+    eventModal.addEventListener('click', (e) => {
+        if (e.target === eventModal) {
+            hideEventModal();
+        }
+    });
+
     // Funções para o chatbot
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', sender === 'ia' ? 'ia-message' : 'user-message');
         messageDiv.textContent = text;
         iaChatMessages.appendChild(messageDiv);
-        iaChatMessages.scrollTop = iaChatMessages.scrollHeight; // Rola para a última mensagem
+        iaChatMessages.scrollTop = iaChatMessages.scrollHeight;
     }
 
     async function handleChatInput() {
@@ -663,43 +780,35 @@
             addMessage(text, 'user');
             iaChatInput.value = '';
             
-            // Exibe um indicador de "digitando..." da IA
             const typingIndicator = document.createElement('div');
             typingIndicator.classList.add('ia-loading-message');
             typingIndicator.textContent = 'A IA está respondendo...';
             iaChatMessages.appendChild(typingIndicator);
             iaChatMessages.scrollTop = iaChatMessages.scrollHeight;
 
-            // Simulação da chamada de API para o Hugging Face
-            // Em um aplicativo real, a chamada seria assim:
-            // const response = await fetch(hfApiUrl, {
-            //     method: 'POST',
-            //     headers: {
-            //         "Authorization": `Bearer ${hfApiKey}`,
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({ inputs: text })
-            // });
-            // const result = await response.json();
-            // const iaResponse = result[0].generated_text;
-
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simula o tempo de resposta da API
-
-            // Remove o indicador de "digitando..."
-            iaChatMessages.removeChild(typingIndicator);
-
-            // Simula a resposta da IA
-            const iaResponse = "Olá! Como uma IA da Pesca, posso te dar informações sobre regulamentação, dicas de equipamentos e espécies de peixes. Qual é a sua pergunta?";
-            addMessage(iaResponse, 'ia');
+            try {
+                // Simulação da chamada de API para o Hugging Face
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                iaChatMessages.removeChild(typingIndicator);
+                const iaResponse = "Olá! Sua pergunta foi recebida. Como uma IA da Pesca, posso te dar informações sobre regulamentação, dicas de equipamentos e espécies de peixes. Qual é a sua pergunta?";
+                addMessage(iaResponse, 'ia');
+            } catch (error) {
+                console.error("Erro ao comunicar com a IA:", error);
+                iaChatMessages.removeChild(typingIndicator);
+                addMessage("Desculpe, não consegui me conectar. Tente novamente mais tarde.", 'ia');
+            }
         }
     }
 
-    iaChatSendBtn.addEventListener('click', handleChatInput);
     iaChatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault();
             handleChatInput();
         }
     });
+
+    iaChatSendBtn.addEventListener('click', handleChatInput);
 
     // Função para abrir o menu lateral
     function openSidebar() {
@@ -715,30 +824,25 @@
 
     // Função para mudar a tela exibida e atualizar o estado ativo dos botões
     function changeScreen(targetId) {
-        // Remove a classe 'active' de todas as telas
         screens.forEach(screen => {
             screen.classList.remove('active');
         });
-        // Adiciona a classe 'active' à tela de destino
         document.getElementById(targetId).classList.add('active');
 
-        // Se a tela de Início for ativada, chama a função para renderizar o feed
         if (targetId === 'home') {
             renderInstagramFeed();
         }
-
-        // Se a tela de Notícias for ativada, chama a função para renderizar as notícias
         if (targetId === 'fishing-news') {
             renderFishingNews();
         }
-        
-        // Se a tela de Tábua de Maré for ativada, chama a função para buscar os dados de maré
         if (targetId === 'tide-table') {
-            currentDayIndex = 0; // Reseta para hoje ao abrir a tela de maré
+            currentDayIndex = 0;
             fetchTideData(currentDayIndex);
         }
+        if (targetId === 'events') {
+            renderEvents();
+        }
 
-        // Atualiza a classe 'active' nos botões de navegação
         sidebarNavItems.forEach(item => {
             if (item.dataset.target === targetId) {
                 item.classList.add('bg-red-100', 'text-red-600');
@@ -755,22 +859,19 @@
         });
     }
 
-    // Adiciona os event listeners aos botões
     openSidebarBtn.addEventListener('click', openSidebar);
     closeSidebarBtn.addEventListener('click', closeSidebar);
     overlay.addEventListener('click', closeSidebar);
 
-    // Adiciona event listeners para os itens de navegação do menu lateral
     sidebarNavItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = item.dataset.target;
             changeScreen(targetId);
-            closeSidebar(); // Fecha o menu após a seleção
+            closeSidebar();
         });
     });
 
-    // Adiciona event listeners para os botões do menu inferior
     bottomNavButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
@@ -779,7 +880,6 @@
         });
     });
 
-    // Inicia o aplicativo mostrando a tela inicial 'home'
     window.onload = function() {
       changeScreen('home');
     };
